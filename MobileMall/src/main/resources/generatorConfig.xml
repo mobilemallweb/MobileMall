@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+<!-- targetRuntime="MyBatis3":生成mybatis豪华框架，如果是MyBatis3Simple则生成简单框架 -->
+	<context id="MySQLTables" targetRuntime="MyBatis3">
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://127.0.0.1/mobilemall" userId="root" password="a">
+		</jdbcConnection>
+
+<!-- 指定javabean的生成策略
+targetPackage：目标包名  targetProject：目标工程-->
+		<javaModelGenerator targetPackage="yc.MobileMall.bean"
+			targetProject="src/main/java">
+		</javaModelGenerator>
+
+<!-- sqlMapGenerator：sql映射生成策略： -->
+		<sqlMapGenerator targetPackage="yc.MobileMall.dao"
+			targetProject="src/main/java">
+		</sqlMapGenerator>
+
+<!-- javaClientGenerator:指定mapper接口所在的位置 -->
+		<javaClientGenerator type="XMLMAPPER"
+			targetPackage="yc.MobileMall.dao" targetProject="src/main/java">
+		</javaClientGenerator>
+
+<!-- 指定要逆向分析哪些表：根据表要创建javaBean
+ 	tableName：表名  domainObjectName：自定义生成的POJO名
+ 	有自增列加 id
+	<generatedKey column="id" sqlStatement="mysql" />
+ -->
+		<table tableName="boughtgoods">
+			<generatedKey column="id" sqlStatement="mysql" />
+		</table>
+		<table tableName="class">
+			<generatedKey column="id" sqlStatement="mysql" />
+		</table>
+		<table tableName="goods">
+			<generatedKey column="id" sqlStatement="mysql" />
+		</table>
+		<table tableName="imgs">
+			<generatedKey column="id" sqlStatement="mysql" />
+		</table>
+		<table tableName="receiver">
+			<generatedKey column="id" sqlStatement="mysql" />
+		</table>
+		<table tableName="reviews">
+			<generatedKey column="id" sqlStatement="mysql" />
+		</table>
+		<table tableName="salesnum">
+			<generatedKey column="id" sqlStatement="mysql" />
+		</table>
+		<table tableName="shopcart">
+			<generatedKey column="id" sqlStatement="mysql" />
+		</table>
+		<table tableName="sizes">
+			<generatedKey column="id" sqlStatement="mysql" />
+		</table>
+		<table tableName="transaction">
+			<generatedKey column="id" sqlStatement="mysql" />
+		</table>
+		<table tableName="user">
+			<generatedKey column="id" sqlStatement="mysql" />
+		</table>
+		<table tableName="wishlist">
+			<generatedKey column="id" sqlStatement="mysql" />
+		</table>
+
+	</context>
+</generatorConfiguration>

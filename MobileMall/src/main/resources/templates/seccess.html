@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="zxx" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf.shiro">
+
+<!-- 替换当前标签为模板中的标签： 加载的节点会整个替换掉加载他的<div>  -->
+<head th:replace="common_head.html::commonHeader('成功页')"></head>
+<body>
+	<div th:replace="common_top.html::onloadtop"></div>
+	
+	<div th:replace="common_js.html::onloadJS"></div>
+	
+	<div th:replace="common_js.html::commonOnLoadJs"></div>
+</body>
+</html>
