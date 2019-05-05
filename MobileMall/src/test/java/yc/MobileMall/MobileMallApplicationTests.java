@@ -1,5 +1,6 @@
 package yc.MobileMall;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import yc.MobileMall.bean.Goods;
 import yc.MobileMall.bean.Shopcart;
 import yc.MobileMall.bean.User;
 import yc.MobileMall.bean.UserExample;
@@ -66,14 +68,21 @@ public class MobileMallApplicationTests {
         jms.send(message);
 	}
 	
+	/**
+	 * 测试购物车列表
+	 */
 	@Autowired
 	private GoodsService gs;
 	@Test
 	public void testCart() {
-		Map<String,Object> map=new HashMap<String, Object>();
-		gs.getShopCat(1, map);
-		Shopcart s= (Shopcart) map.get("listcart");
-		System.out.println(s.toString());
+		List<Shopcart> l=gs.getShopCat(1);
+		
+		Integer[] len=new Integer[l.size()];
+		for(int i=0;i<l.size();i++){
+			len[i]=l.get(0).getGoodsId();
+		}
+		List<Goods> listGoods=gs.getGoods(len);
+		System.out.println(listGoods.get(0).toString());
 	}
 	
 	

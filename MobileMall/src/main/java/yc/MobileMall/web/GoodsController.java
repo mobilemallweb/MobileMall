@@ -27,7 +27,7 @@ public class GoodsController {
 	public String getShopCart(Integer userId,HttpSession session){
 		System.out.println(userId+"----------");
 		Map<String, Object> map=new HashMap<String, Object>();
-		goodsService.getShopCat(userId,map);
+	//	goodsService.getShopCat(userId,map);
 		
 		
 		return "cart.html";

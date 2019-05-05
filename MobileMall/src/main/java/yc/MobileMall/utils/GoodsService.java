@@ -26,26 +26,48 @@ public class GoodsService {
 	private UserMapper userMapper;			//用户
 	
 	/**
-	 * test  多次查询，将数据保存在相应的对象中  最终保存在Map中
+	 * test  获取用户购物车
 	 * @param id
 	 * @param map
 	 * 取值购物车 ：listcart  
 	 * 取商品信息：listgoods
 	 */
-	public void getShopCat(Integer id, Map<String, Object> map){
+	public List<Shopcart> getShopCat(Integer id){
 		User u=userMapper.selectByPrimaryKey(id);
 		
 		ShopcartExample sce=new ShopcartExample();     //购物车里有多件商品
 		Criteria csce=sce.createCriteria();
 		csce.andUserIdEqualTo(u.getId());
 		List<Shopcart> listcart=shopcartMapper.selectByExample(sce);  
-		map.put("listcart", listcart);
-		
-		List<Goods> listgoods=new ArrayList<Goods>();
-		for(int i=0;i<listcart.size();i++){
-			Goods  goods=goodsMapper.selectByPrimaryKey(listcart.get(i).getGoodsId());
-			listgoods.add(goods);
-		}
-		map.put("listgoods",listgoods);
+		return listcart;
 	}
+	
+	
+	/**
+	 * 根据goodsid  获取对应的物品信息
+	 * @param id
+	 * @return
+	 */
+	public Goods getg(Integer id){
+		System.err.println(id);
+		return goodsMapper.selectByPrimaryKey(id);
+	}
+	
+	/**
+	 * 根据goodsid数组  获取所有对应的物品信息
+	 * @param id
+	 * @return
+	 */
+	public List<Goods> getGoods(Integer[] ids){
+		List<Goods> listg=new ArrayList<Goods>();
+		for(Integer id:ids){
+			Goods gs=goodsMapper.selectByPrimaryKey(id);
+			listg.add(gs);
+		}
+		return listg;
+	}
+	
+	
+	
+	
 }
