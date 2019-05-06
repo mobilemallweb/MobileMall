@@ -50,8 +50,8 @@
                                                     <button class="btn-link dropdown-toggle"><img src="assets/images/icons/en-gb.png" th:src="@{/assets/images/icons/en-gb.png}" alt="Icons"> English <i class="fa fa-angle-down"></i></button>
                                                     <div class="dropdown-menu">
                                                         <ul>
-                                                           <li><a href="#"><img src="assets/images/icons/en-gb.png" th:src="@{/assets/images/icons/en-gb.png}" alt="Icons"> English</a></li>
-                                                           <li><a href="#"><img src="assets/images/icons/fr-fr.png" th:src="@{/assets/images/icons/fr-fr.png}" alt="Icons"> French</a></li>
+                                                           <li><a th:href="@{/login.html(l='en_US')}"><img src="assets/images/icons/en-gb.png" th:src="@{/assets/images/icons/en-gb.png}" alt="Icons"> English</a></li>
+                                                           <li><a th:href="@{/login.html(l='zh_CN')}"><img src="assets/images/icons/fr-fr.png" th:src="@{/assets/images/icons/fr-fr.png}" alt="Icons"> 中文</a></li>
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -198,54 +198,54 @@
                 <div class="container">
                     <nav id="main_nav" class="stellarnav">
                         <ul class="text-left">
-                            <li><a href="index.html"><span>Home</span></a>
+                            <li><a href="index.html"><span th:text="#{top.home}">Home</span></a>
                                 <ul>
-                                    <li><a href="index.html">Home Page 1</a></li>
-                                    <li><a href="index-2.html">Home Page 2</a></li>
-                                    <li><a href="index-3.html">Home Page 3</a></li>
-                                    <li><a href="index-4.html">Home Page 4</a></li>
+                                    <li><a href="index.html" th:text="#{top.homepage1}">Home Page 1</a></li>
+                                    <li><a href="index-2.html" th:text="#{top.homepage2}">Home Page 2</a></li>
+                                    <li><a href="index-3.html" th:text="#{top.homepage3}">Home Page 3</a></li>
+                                    <li><a href="index-4.html" th:text="#{top.homepage4}">Home Page 4</a></li>
                                 </ul>
                             </li>
-                            <li class="mega" data-columns="3"><a href="my-account.html"><span>Pages</span></a>
+                            <li class="mega" data-columns="3"><a href="my-account.html"><span th:text="#{top.pages}">Pages</span></a>
                                 <ul class="mega-container">
-                                    <li><a href="my-account.html" class="mega-menu-title"><h3>Inner pages 01</h3></a>
+                                    <li><a href="my-account.html" class="mega-menu-title"><h3 th:text="#{top.page1}">Inner pages 01</h3></a>
                                         <ul>
-                                            <li><a href="my-account.html">My Account</a></li>
-                                            <li><a href="login.html">Login</a></li>
-                                            <li><a href="register.html">Register</a></li>
+                                            <li><a href="my-account.html" th:text="#{top.MyAccount}">My Account</a></li>
+                                            <li><a href="login.html" th:text="#{top.Login}">Login</a></li>
+                                            <li><a href="register.html" th:text="#{top.Register}">Register</a></li>
                                         </ul>
                                     </li>
 
-                                    <li><a href="#" class="mega-menu-title"><h3>Inner pages 02</h3></a>
+                                    <li><a href="#" class="mega-menu-title"><h3 th:text="#{top.page2}">Inner pages 02</h3></a>
                                         <ul>
                                         	<form action="CartPage" method="post" id="formCart">
                                         		<input type="hidden" name="id" th:value="${session.lgedUser.id}" th:if="${not #strings.isEmpty(session.lgedUser)}">
                                         	</form>
-                                            <li><a href="#" onclick="formCart.submit()">Cart Page</a><li>
-                                            <li><a href="checkout.html">Checkout Page</a></li>
-                                            <li><a href="wishlist.html">Wishlist Page</a></li>
+                                            <li><a href="#" onclick="formCart.submit()" th:text="#{top.Cart}">Cart Page</a><li>
+                                            <li><a href="checkout.html" th:text="#{top.Checkout}">Checkout Page</a></li>
+                                            <li><a href="wishlist.html" th:text="#{top.Wishlist}">Wishlist Page</a></li>
                                         </ul>
                                     </li>
 
-                                    <li><a href="#" class="mega-menu-title"><h3>Inner pages 03</h3></a>
+                                    <li><a href="#" class="mega-menu-title"><h3 th:text="#{top.page3}">Inner pages 03</h3></a>
                                         <ul>
-                                            <li><a href="compare.html">Product Compare</a></li>
-                                            <li><a href="faqs.html">FAQs Page</a></li>
-                                            <li><a href="404.html">404 Page</a></li>
+                                            <li><a href="compare.html" th:text="#{top.Product}">Product Compare</a></li>
+                                            <li><a href="faqs.html" th:text="#{top.FAQs}">FAQs Page</a></li>
+                                            <li><a href="404.html" th:text="#{top.404}">404 Page</a></li>
                                         </ul>
                                     </li>
                                 </ul>
                             </li>
-                            <li><a href="shop-grid.html"><span>Shop Pages</span></a>
+                            <li><a href="shop-grid.html"><span th:text="#{top.Shop}">Shop Pages</span></a>
                                 <ul>
-                                    <li><a href="shop-grid.html">Shop Grid</a></li>
-                                    <li><a href="shop-list.html">Shop List</a></li>
-                                    <li><a href="shop-right-sidebar.html">Shop Right Sidebar</a></li>
-                                    <li><a href="shop-fullwidth.html">Shop Full Width</a></li>
-                                    <li><a href="single-product.html">Single Product Page</a></li>
+                                    <li><a href="shop-grid.html" th:text="#{top.Grid}">Shop Grid</a></li>
+                                    <li><a href="shop-list.html" th:text="#{top.List}">Shop List</a></li>
+                                    <li><a href="shop-right-sidebar.html" th:text="#{top.RightSidebar}">Shop Right Sidebar</a></li>
+                                    <li><a href="shop-fullwidth.html" th:text="#{top.FullWidth}">Shop Full Width</a></li>
+                                    <li><a href="single-product.html" th:text="#{top.ProductPage}">Single Product Page</a></li>
                                 </ul>
                             </li>
-                            <li><a href="blog.html"><span>Blog Pages</span></a>
+                            <li><a href="blog.html"><span th:text="#{top.Blog}">Blog Pages</span></a>
                                 <ul>
                                     <li><a href="blog.html">Blog FullWidth</a></li>
                                     <li><a href="blog-left-sidebar.html">Blog Left Sidebar</a></li>
@@ -253,8 +253,8 @@
                                     <li><a href="blog-details.html">Blog Details</a></li>
                                 </ul>
                             </li>
-                            <li><a href="about.html"><span>About Us</span></a></li>
-                            <li><a href="contact.html"><span>Contact Us</span></a></li>
+                            <li><a href="about.html"><span th:text="#{top.About}">About Us</span></a></li>
+                            <li><a href="contact.html"><span th:text="#{top.Contact}">Contact Us</span></a></li>
                         </ul>
                     </nav>
                 </div> <!-- end of container -->

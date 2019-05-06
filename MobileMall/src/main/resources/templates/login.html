@@ -47,15 +47,15 @@
                                             <div class="login-form mt-half">
                                                 <form action="login" method="post">
                                                     <div class="form-group row align-items-center mb-4">
-                                                        <label for="email" class="col-12 col-sm-12 col-md-4 col-form-label">Email address</label>
+                                                        <label for="email" class="col-12 col-sm-12 col-md-4 col-form-label" th:text="#{login.username}">Account</label>
                                                         <div class="col-12 col-sm-12 col-md-8">
-                                                            <input type="text" class="form-control" name="AandE" id="email" placeholder="Account/Email" required>
+                                                            <input type="text" class="form-control" name="AandE" id="email" th:placeholder="#{login.username}" required>
                                                         </div>
                                                     </div>
                                                     <div class="form-group row align-items-center mb-4">
-                                                        <label for="c-password" class="col-12 col-sm-12 col-md-4 col-form-label">Password</label>
+                                                        <label for="c-password" class="col-12 col-sm-12 col-md-4 col-form-label" th:text="#{login.password}">Password</label>
                                                         <div class="col-12 col-sm-12 col-md-8">
-                                                            <input type="password" class="form-control" name="password" id="c-password" placeholder="Password" required>
+                                                            <input type="password" class="form-control" name="password" id="c-password" th:placeholder="#{login.password}" required>
                                                             <button class="pass-show-btn" type="button">Show</button>
                                                         </div>
                                                     </div>
@@ -63,11 +63,11 @@
                                                   	<p style="color:red" th:text="${loginMsg}" th:if="${not #strings.isEmpty(loginMsg)}"></p>
                                                     
                                                     <div class="login-box mt-5 text-center">
-                                                        <p><a href="#">Forgot your password?</a></p>
-                                                        <button type="submit" class="default-btn tiny-btn mt-4">Sign In</button>
+                                                        <p><a href="#" th:text="#{login.forgetPassword}">Forgot your password?</a></p>
+                                                        <button type="submit" class="default-btn tiny-btn mt-4" th:text="#{login.button}">Sign In</button>
                                                     </div>
                                                     <div class="text-center mt-half pt-half top-bordered">
-                                                        <p>No account? <a href="register.html">Create one here</a>.</p>
+                                                        <p><a href="register.html" th:text="#{login.creatAccount}">No account? Create one here</a>.</p>
                                                     </div>
                                                 </form>
                                             </div>

@@ -31,3 +31,9 @@ spring:
     cache: false #关闭缓存
 #  mvc: 
 #    static-path-pattern: /static/**
+  messages: 
+    basename: i18n.login,i18n.top
+     #指定国际化配置文件路径+基础名
+
+
+
