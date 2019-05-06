@@ -41,70 +41,68 @@
                                                 <h2>Shopping Cart</h2>
                                             </div>
 
-                                            <form action="#">
-                                                <div class="table-responsive">
-                                                    <table class="table table-bordered">
-                                                        <thead>
-                                                            <tr>
-                                                                <td>Image</td>
-                                                                <td>Product Name</td>
-                                                                <td>Model</td>
-                                                                <td>Quantity</td>
-                                                                <td>Unit Price</td>
-                                                                <td>Total</td>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>
-                                                                    <a href="single-product.html"><img src="assets/images/products/best/products-1-1.jpg" alt="Cart Product Image" title="Cas Meque Metus" class="img-thumbnail"></a>
-                                                                </td>
-                                                                <td>
-                                                                    <a href="single-product.html">Cas Meque Metus</a>
-                                                                    <span>Delivery Date: 2018-04-22</span>
-                                                                    <span>Color: Blue</span>
-                                                                    <span>Reward Points: 300</span>
-                                                                </td>
-                                                                <td>3</td>
-                                                                <td>
-                                                                    <div class="input-group btn-block">
-                                                                        <input type="text" name="quantity" value="1" size="1" class="form-control">
-                                                                        <span class="input-group-btn">
-                                                                            <button type="submit" data-toggle="tooltip" data-direction="top" class="btn btn-primary" data-original-title="Update"><i class="fa fa-refresh"></i></button>
-                                                                            <button type="button" data-toggle="tooltip" data-direction="top" class="btn btn-danger pull-right" data-original-title="Remove"><i class="fa fa-times-circle"></i></button>
-                                                                        </span>
-                                                                    </div>
-                                                                </td>
-                                                                <td>$200.00</td>
-                                                                <td>$200.00</td>
-                                                            </tr>
-
-                                                            <tr>
-                                                                <td>
-                                                                    <a href="single-product.html"><img src="assets/images/products/best/products-6-1.jpg" alt="Cart Product Image" title="Cas Meque Metus" class="img-thumbnail"></a>
-                                                                </td>
-                                                                <td>
-                                                                    <a href="single-product.html">Proin Lectus Ipsum</a>
-                                                                    <span>Color: Brown</span>
-                                                                </td>
-                                                                <td>10</td>
-                                                                <td>
-                                                                    <div class="input-group btn-block">
-                                                                        <input type="text" name="quantity" value="1" size="1" class="form-control">
-                                                                        <span class="input-group-btn">
-                                                                            <button type="submit" data-toggle="tooltip" data-direction="top" class="btn btn-primary" data-original-title="Update"><i class="fa fa-refresh"></i></button>
-                                                                            <button type="button" data-toggle="tooltip" data-direction="top" class="btn btn-danger pull-right" data-original-title="Remove"><i class="fa fa-times-circle"></i></button>
-                                                                        </span>
-                                                                    </div>
-                                                                </td>
-                                                                <td>$480.00</td>
-                                                                <td>$480.00</td>
-                                                            </tr>
-                                                            
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </form>
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <td>Image</td>
+                                                            <td>Product Name</td>
+                                                            <td>Model</td>
+                                                            <td>Quantity</td>
+                                                            <td>Unit Price</td>
+                                                            <td>Total</td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <a href="single-product.html"><img src="assets/images/products/best/products-6-1.jpg" alt="Cart Product Image" title="Cas Meque Metus" class="img-thumbnail"></a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="single-product.html">Proin Lectus Ipsum</a>
+                                                                <span>Color: Brown</span>
+                                                            </td>
+                                                            <td>10</td>
+                                                            <td>
+                                                                <div class="input-group btn-block">
+                                                                    <input type="text" name="quantity" value="1" size="1" class="form-control">
+                                                                    <span class="input-group-btn">
+                                                                        <button type="submit" data-toggle="tooltip" data-direction="top" class="btn btn-primary" data-original-title="Update"><i class="fa fa-refresh"></i></button>
+                                                                        <button type="button" data-toggle="tooltip" data-direction="top" class="btn btn-danger pull-right" data-original-title="Remove"><i class="fa fa-times-circle"></i></button>
+                                                                    </span>
+                                                                </div>
+                                                            </td>
+                                                            <td>$480.00</td>
+                                                            <td>$480.00</td>
+                                                        </tr>
+                                                        
+                                                       <tr th:each="gd : ${session.Goodslist}" >
+                                                        	 <td>
+                                                                <a href="single-product.html"><img src="assets/images/products/best/products-1-1.jpg" alt="Cart Product Image" title="Cas Meque Metus" class="img-thumbnail"></a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="single-product.html" th:text="${gd.name}"></a>
+                                                            </td>
+                                                            <td th:text="${gd.goodsnum}">数量</td>  
+                                                            <td>
+                                                           	 <form action="updateShopCart" method="post">
+                                                           	 	<input type="hidden" th:value="${gd.cartid}" name="cartId"/>
+                                                                <div class="input-group btn-block">
+                                                                    <input type="text" name="quantity" th:value="${gd.goodsnum}" size="1" class="form-control">
+                                                                    <span class="input-group-btn">
+                                                                        <button type="submit" data-toggle="tooltip" data-direction="top" class="btn btn-primary" data-original-title="Update"><i class="fa fa-refresh"></i></button>
+                                                                        <button type="button" data-toggle="tooltip" onclick="removeCart()" data-direction="top" class="btn btn-danger pull-right" data-original-title="Remove"><i class="fa fa-times-circle"></i></button>
+                                                                    </span>
+                                                                </div>
+                                                               </form>
+                                                            </td>
+                                                            <td th:text="${gd.price}">单价</td>
+                                                            <td th:text="${gd.totalprice}">总价格</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            
 
                                             <div class="cart-accordion-wrapper mt-full">
                                                 <h2>What would you like to do next?</h2>
@@ -487,7 +485,12 @@
 
     <!-- JS
     ============================================ -->
-
+	<script type="text/javascript">
+		/* function removeCart(){
+			$.post()
+		} */
+	</script>
+	
 	<div th:replace="common_js.html::commonOnLoadJs"></div>
 </body>
 </html>

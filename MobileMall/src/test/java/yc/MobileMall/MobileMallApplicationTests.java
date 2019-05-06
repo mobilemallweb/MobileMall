@@ -68,23 +68,6 @@ public class MobileMallApplicationTests {
         jms.send(message);
 	}
 	
-	/**
-	 * 测试购物车列表
-	 */
-	@Autowired
-	private GoodsService gs;
-	@Test
-	public void testCart() {
-		List<Shopcart> l=gs.getShopCat(1);
-		
-		Integer[] len=new Integer[l.size()];
-		for(int i=0;i<l.size();i++){
-			len[i]=l.get(0).getGoodsId();
-		}
-		List<Goods> listGoods=gs.getGoods(len);
-		System.out.println(listGoods.get(0).toString());
-	}
-	
 	
 	
 	

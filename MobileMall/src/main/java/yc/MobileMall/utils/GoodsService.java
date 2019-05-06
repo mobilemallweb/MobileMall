@@ -1,9 +1,11 @@
 package yc.MobileMall.utils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,7 @@ import yc.MobileMall.bean.User;
 import yc.MobileMall.dao.GoodsMapper;
 import yc.MobileMall.dao.ShopcartMapper;
 import yc.MobileMall.dao.UserMapper;
+import yc.MobileMall.mybean.ShoppedCart;
 
 @Service
 public class GoodsService {
@@ -27,10 +30,8 @@ public class GoodsService {
 	
 	/**
 	 * test  获取用户购物车
-	 * @param id
+	 * @param id 
 	 * @param map
-	 * 取值购物车 ：listcart  
-	 * 取商品信息：listgoods
 	 */
 	public List<Shopcart> getShopCat(Integer id){
 		User u=userMapper.selectByPrimaryKey(id);
@@ -42,30 +43,92 @@ public class GoodsService {
 		return listcart;
 	}
 	
-	
 	/**
-	 * 根据goodsid  获取对应的物品信息
+	 * 根据userid 获取购物车信息
 	 * @param id
 	 * @return
 	 */
-	public Goods getg(Integer id){
-		System.err.println(id);
-		return goodsMapper.selectByPrimaryKey(id);
+	public List<Shopcart> getGoodsNum(Integer userid){
+		ShopcartExample example=new ShopcartExample();
+		Criteria ct=example.createCriteria();
+		ct.andUserIdEqualTo(userid);
+		
+		List<Shopcart> list=shopcartMapper.selectByExample(example);
+		return list;
 	}
 	
+	
 	/**
-	 * 根据goodsid数组  获取所有对应的物品信息
-	 * @param id
-	 * @return
+	 * ok  获取用户购物车所有信息
+	 * @param id 通过用户id
+	 * 
 	 */
-	public List<Goods> getGoods(Integer[] ids){
-		List<Goods> listg=new ArrayList<Goods>();
-		for(Integer id:ids){
-			Goods gs=goodsMapper.selectByPrimaryKey(id);
-			listg.add(gs);
+	public List<ShoppedCart> getShopCatGoods(Integer id){
+		List<ShoppedCart> cartList=new ArrayList<ShoppedCart>();
+		
+		ShopcartExample sce=new ShopcartExample();     //购物车里有多件商品
+		Criteria csce=sce.createCriteria();
+		csce.andUserIdEqualTo(id);
+		List<Shopcart> listcart=shopcartMapper.selectByExample(sce);  
+		
+		int gid=-1;
+		ShoppedCart shopcart=new ShoppedCart();
+		for(int i=0;i<listcart.size();i++){
+			gid=listcart.get(i).getGoodsId();
+			shopcart.setUserId(id);
+			shopcart.setGoodsid(gid);
+			shopcart.setGoodsnum(listcart.get(i).getGoodsnum());
+			shopcart.setCartid(listcart.get(i).getId());
+			
+			Goods goods=getGoods(gid);
+			BeanUtils.copyProperties(goods, shopcart);		//复制
+			
+			setTotalprice(shopcart);
+			cartList.add(shopcart);
 		}
-		return listg;
+		return cartList;
 	}
+	
+	/**
+	 * 通过goodsid，查询商品
+	 * @param id
+	 * @return
+	 */
+	public Goods getGoods(int id) {
+		return	goodsMapper.selectByPrimaryKey(id);
+	}
+	
+	/**
+	 * 设置一定数量的价格
+	 * @param shopcart
+	 * @return
+	 */
+	public void setTotalprice(ShoppedCart shopcart){
+		if(shopcart.getDisPrice()==null){
+			shopcart.setTotalprice(shopcart.getPrice()*shopcart.getGoodsnum()); 
+		}else{
+			shopcart.setTotalprice(shopcart.getDisPrice()*shopcart.getGoodsnum());
+		}
+	}
+	
+	/**
+	 * 更新购物车，商品数量
+	 * @param cartId 对应的购物车id
+	 * @param quantity	更改数量
+	 */
+	public void updateCart(Integer cartId, Integer quantity) {
+		Shopcart sc=new Shopcart();
+		sc.setId(cartId);
+		sc.setGoodsnum(quantity);
+		shopcartMapper.updateByPrimaryKeySelective(sc);
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
