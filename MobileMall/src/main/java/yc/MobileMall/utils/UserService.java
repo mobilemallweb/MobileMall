@@ -50,5 +50,14 @@ public class UserService {
 		}
 	}
 	
+	/**
+	 * 通过用户id查询，用户
+	 * @param userId
+	 * @return
+	 */
+	public User getThisUser(Integer userId) {
+		return usermapper.selectByPrimaryKey(userId);
+	}
+	
 	
 }

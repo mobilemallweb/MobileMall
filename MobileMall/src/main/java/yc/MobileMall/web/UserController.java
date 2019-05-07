@@ -40,7 +40,6 @@ public class UserController {
 		}else{
 			user.setAccount(AandE.trim());
 		}
-		
 		try {
 			User lgedUser=uService.getLogin(user);
 			session.setAttribute("lgedUser", lgedUser);

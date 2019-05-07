@@ -103,7 +103,7 @@
                                                 </table>
                                             </div>
                                             
-
+											<!-- 收货人信息 -->
                                             <div class="cart-accordion-wrapper mt-full">
                                                 <h2>What would you like to do next?</h2>
                                                 <p>Choose if you have a discount code or reward points you want to use or would like to estimate your delivery cost.</p>
@@ -111,7 +111,7 @@
                                                     <div class="card">
                                                         <div class="card-header" role="tab" id="headingCoupon">
                                                             <h4 class="mb-0">
-                                                                <a data-toggle="collapse" href="#collapseCoupon" aria-expanded="false" aria-controls="collapseCoupon">Use Coupon Code<i class="ion ion-ios-arrow-down"></i></a>
+                                                                <a data-toggle="collapse" href="#collapseCoupon" aria-expanded="false" aria-controls="collapseCoupon" th:text="#{cart.UseCouponCode}">Use Coupon Code<i class="ion ion-ios-arrow-down"></i></a>
                                                             </h4>
                                                         </div>
                                                         <div id="collapseCoupon" class="collapse" role="tabpanel" aria-labelledby="headingCoupon" data-parent="#cart_accordion">
@@ -131,7 +131,7 @@
                                                     <div class="card">
                                                         <div class="card-header" role="tab" id="headingTax">
                                                             <h4 class="mb-0">
-                                                                <a class="collapsed" data-toggle="collapse" href="#collapseTax" aria-expanded="false" aria-controls="collapseTax">Estimate Shipping &amp; Taxes<i class="ion ion-ios-arrow-down"></i></a>
+                                                                <a class="collapsed" data-toggle="collapse" href="#collapseTax" aria-expanded="false" aria-controls="collapseTax" th:text="#{cart.EstimateShippingTaxes}">Estimate Shipping &amp; Taxes<i class="ion ion-ios-arrow-down"></i></a>
                                                               </h4>
                                                         </div>
                                                         <div id="collapseTax" class="collapse" role="tabpanel" aria-labelledby="headingTax" data-parent="#cart_accordion">
@@ -179,7 +179,7 @@
                                                     <div class="card">
                                                         <div class="card-header" role="tab" id="headingGift">
                                                             <h4 class="mb-0">
-                                                                <a class="collapsed" data-toggle="collapse" href="#collapseGift" aria-expanded="false" aria-controls="collapseGift">Use Gift Certificate<i class="ion ion-ios-arrow-down"></i></a>
+                                                                <a class="collapsed" data-toggle="collapse" href="#collapseGift" aria-expanded="false" aria-controls="collapseGift" th:text="#{cart.UseGiftCertificate}">Use Gift Certificate<i class="ion ion-ios-arrow-down"></i></a>
                                                               </h4>
                                                         </div>
                                                         <div id="collapseGift" class="collapse" role="tabpanel" aria-labelledby="headingGift" data-parent="#cart_accordion">
@@ -206,11 +206,11 @@
                                                             <tbody>
                                                                 <tr>
                                                                     <td><strong>Sub-Total:</strong></td>
-                                                                    <td>$860.00</td>
+                                                                    <td th:text="${session.pricetotal}">$860.00</td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td><strong>Total:</strong></td>
-                                                                    <td><span class="primary-color">$860.00</span></td>
+                                                                    <td><span class="primary-color" th:text="${session.pricetotal}">$860.00</span></td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
