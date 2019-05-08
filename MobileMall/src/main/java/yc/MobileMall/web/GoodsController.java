@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import yc.MobileMall.bean.Receiver;
@@ -35,7 +36,7 @@ public class GoodsController {
 	 * @return
 	 * 可优化
 	 */
-	@PostMapping("CartPage")
+	@RequestMapping("CartPage")
 	public String getShopCart(Integer id,HttpSession session){
 		if(id!=null){
 			List<ShoppedCart> listGoods=goodsService.getShopCatGoods(id);
@@ -52,9 +53,9 @@ public class GoodsController {
 	}
 	
 	@PostMapping("updateShopCart")
-	public String updateShopCart(Integer cartId,Integer quantity){
+	@ResponseBody
+	public void updateShopCart(Integer cartId,Integer quantity){
 		goodsService.updateCart(cartId,quantity);
-		return "redirect:/cart.html"; 
 	}
 	
 	@PostMapping("checkoutlist")
