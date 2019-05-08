@@ -39,8 +39,19 @@
 		});
 	} 
 	
-	function pau(){
-		alert('pay');
+	function pay(){
+		$.ajax({
+			type:"POST",
+			url:"cartPay",
+			data:$('#formPay').serialize(),
+			success:function(data){
+				alert("支付成功!");
+				/* window.location.href=”www.baidu.com”; */
+			},
+			error:function(){
+				alert('异常！');
+			}
+		});
 	}
 </script>
 
@@ -377,7 +388,7 @@
                                                 </div>
                                                 <div class="checkout-payment"> 
                                                 
-                                                     <form action="#">  <!-- 改用ajax提交 -->
+                                                     <form id="formPay" action="#">  <!-- 改用ajax提交 -->
                                                         <div class="form-row">
                                                             <div class="custom-radio">
                                                                 <input class="form-check-input" type="radio" name="payment" id="check_payment" value="check" checked>

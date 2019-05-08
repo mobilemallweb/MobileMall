@@ -2,6 +2,7 @@ package yc.MobileMall.web;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +54,7 @@ public class GoodsController {
 	@PostMapping("updateShopCart")
 	public String updateShopCart(Integer cartId,Integer quantity){
 		goodsService.updateCart(cartId,quantity);
-		return "redirect:/cart.html";
+		return "redirect:/cart.html"; 
 	}
 	
 	@PostMapping("checkoutlist")
@@ -71,10 +72,15 @@ public class GoodsController {
 		} catch (BizException e) {
 			e.printStackTrace();
 		}
-		return "ok";
+		return "收货信息已保存";
 	}
 	
-	
+	@PostMapping("cartPay")
+	@ResponseBody
+	public String cartPay(HttpServletRequest req){
+		System.out.println(req.getParameter("payment"));
+		return "支付成功！";
+	}
 	
 	
 	
