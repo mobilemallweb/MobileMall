@@ -35,7 +35,7 @@ public class UserController {
 	public String login(String AandE,String password,Map<String,String> map,HttpSession session){
 		User user = new User();
 		user.setPassword(password);
-		if(AandE.contains("@qq.com")){
+		if(AandE.contains("@qq.com")){     //////////////////////////////用户邮箱必须@qq.com结尾
 			user.setEmail(AandE.trim());
 		}else{
 			user.setAccount(AandE.trim());

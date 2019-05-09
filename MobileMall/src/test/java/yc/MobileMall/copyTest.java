@@ -10,8 +10,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import yc.MobileMall.bean.Goods;
+import yc.MobileMall.mybean.GoodsOverall;
 import yc.MobileMall.mybean.ShoppedCart;
 import yc.MobileMall.utils.GoodsService;
+import yc.MobileMall.utils.ShopListService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -35,5 +37,13 @@ public class copyTest {
 		goodsService.updateCart(1, 99);
 	}
 	
+	@Autowired
+	private ShopListService sls;
+	@Test  //测试商品信息
+	public void test4(){
+		
+		List<GoodsOverall> list=sls.selectAllGoods();
+		System.out.println(list.get(1));
+	}
 	
 }

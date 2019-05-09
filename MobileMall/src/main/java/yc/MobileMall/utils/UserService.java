@@ -42,11 +42,18 @@ public class UserService {
 		Random rm=new Random();
 		int account=100000+rm.nextInt(99999999);
 		user.setAccount(account+"");
-		if(usermapper.insert(user)<1){
-			throw new BizException("用户创建失败");
-		}else{
-//			postEmail.sendMail(user.getEmail(), "Mobile Mall", 
-//					"wolcome to Mobile Mall,your account is "+account);
+		
+	//先查询邮箱是否已经注册过	
+		UserExample example=new UserExample();
+		Criteria cr=example.createCriteria();
+		cr.andEmailEqualTo(user.getEmail());
+		List<User> ulist=usermapper.selectByExample(example);
+		if(ulist.size()>0){
+			throw new BizException("邮箱已经被使用！");
+		}else if(usermapper.insert(user)<1){
+			throw new BizException("用户创建失败！");
+		}else{		//创建成功，发送邮件
+			postEmail.sendMail(user.getEmail(), "欢迎您加入ororus购物", "你的用户账号为："+account+",让我们一起买买买...");
 		}
 	}
 	
