@@ -55,6 +55,7 @@ public class GoodsController {
 	@PostMapping("updateShopCart")
 	@ResponseBody
 	public void updateShopCart(Integer cartId,Integer quantity){
+		System.err.println("cartID:"+cartId+"  quantity:"+quantity);
 		goodsService.updateCart(cartId,quantity);
 	}
 	

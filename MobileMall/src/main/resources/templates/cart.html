@@ -76,7 +76,7 @@
                                                             <td>$480.00</td>
                                                         </tr> -->
                                                         
-                                                       <tr th:each="gd : ${session.Goodslist}" >
+                                                       <tr th:each="gd : ${session.Goodslist}">
                                                         	 <td>
                                                                 <a href="single-product.html"><img src="assets/images/products/best/products-1-1.jpg" alt="Cart Product Image" title="Cas Meque Metus" class="img-thumbnail"></a>
                                                             </td>
@@ -85,12 +85,12 @@
                                                             </td>
                                                             <td th:text="${gd.goodsnum}">数量</td>  
                                                             <td>
-                                                           	 <form id="formUpdate" action="#" >
+                                                           	 <form th:id="|formUpdate${gdStat.index}|" action="#" >
                                                            	 	<input type="hidden" th:value="${gd.cartid}" name="cartId"/>
                                                                 <div class="input-group btn-block">
                                                                     <input type="text" name="quantity" th:value="${gd.goodsnum}" size="1" class="form-control">
-                                                                    <span class="input-group-btn">
-                                                                        <button type="submit" onclick="updateNum()" data-toggle="tooltip" data-direction="top" class="btn btn-primary" data-original-title="Update"><i class="fa fa-refresh"></i></button>
+                                                                    <span class="input-group-btn"> 
+                                                                        <button type="submit"  th:onclick="|updateNum(${gdStat.index})|" data-toggle="tooltip" data-direction="top" class="btn btn-primary" data-original-title="Update"><i class="fa fa-refresh"></i></button>
                                                                         <button type="button" data-toggle="tooltip" onclick="removeCart()" data-direction="top" class="btn btn-danger pull-right" data-original-title="Remove"><i class="fa fa-times-circle"></i></button>
                                                                     </span>
                                                                 </div>
@@ -486,18 +486,18 @@
     <!-- JS
     ============================================ -->
 	<script type="text/javascript">
-		function updateNum(){
+		function updateNum(a){
 			$.ajax({
 				type:"POST",
 				url:"updateShopCart",
-				data:$('#formUpdate').serialize(),
+				data:$('#formUpdate'+a).serialize(),
 				success:function(){
 					location.href='CartPage?id='+[[${session.lgedUser.id}]];
 				},
 				error:function(){
 					alert('异常！');
 				}
-			});
+			}); 
 		}
 	</script>
 	
