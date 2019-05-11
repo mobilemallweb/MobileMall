@@ -52,11 +52,26 @@ public class GoodsController {
 		}
 	}
 	
+	/**
+	 * 更改购物车商品数量
+	 * @param cartId
+	 * @param quantity
+	 */
 	@PostMapping("updateShopCart")
 	@ResponseBody
 	public void updateShopCart(Integer cartId,Integer quantity){
-		System.err.println("cartID:"+cartId+"  quantity:"+quantity);
 		goodsService.updateCart(cartId,quantity);
+	}
+	
+	/**
+	 * 从购物车删除选中的商品
+	 * @param cartId
+	 */
+	@PostMapping("deleteShopCart")
+	@ResponseBody
+	public void deleteShopCart(Integer cartId){
+		System.err.println("cartID:"+cartId);
+		goodsService.deleteCart(cartId);
 	}
 	
 	@PostMapping("checkoutlist")

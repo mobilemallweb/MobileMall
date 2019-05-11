@@ -123,6 +123,14 @@ public class GoodsService {
 		shopcartMapper.updateByPrimaryKeySelective(sc);
 	}
 	
+	/**
+	 * 根据cartId 删除cart
+	 * @param cartId
+	 */
+	public void deleteCart(Integer cartId) {
+		shopcartMapper.deleteByPrimaryKey(cartId);
+	}
+	
 	
 	
 	

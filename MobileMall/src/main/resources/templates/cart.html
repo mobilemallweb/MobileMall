@@ -42,7 +42,7 @@
                                             </div>
 
                                             <div class="table-responsive">
-                                                <table class="table table-bordered">
+                                                <table id="signFrame" class="table table-bordered">
                                                     <thead>
                                                         <tr>
                                                             <td>Image</td>
@@ -91,7 +91,7 @@
                                                                     <input type="text" name="quantity" th:value="${gd.goodsnum}" size="1" class="form-control">
                                                                     <span class="input-group-btn"> 
                                                                         <button type="submit"  th:onclick="|updateNum(${gdStat.index})|" data-toggle="tooltip" data-direction="top" class="btn btn-primary" data-original-title="Update"><i class="fa fa-refresh"></i></button>
-                                                                        <button type="button" data-toggle="tooltip" onclick="removeCart()" data-direction="top" class="btn btn-danger pull-right" data-original-title="Remove"><i class="fa fa-times-circle"></i></button>
+                                                                        <button type="button" data-toggle="tooltip" th:onclick="|deleterow(${gdStat.index})|" data-direction="top" class="btn btn-danger pull-right" data-original-title="Remove"><i class="fa fa-times-circle"></i></button>
                                                                     </span>
                                                                 </div>
                                                                </form>
@@ -492,6 +492,21 @@
 				url:"updateShopCart",
 				data:$('#formUpdate'+a).serialize(),
 				success:function(){
+					location.href='CartPage?id='+[[${session.lgedUser.id}]];
+				},
+				error:function(){
+					alert('异常！');
+				}
+			}); 
+		}
+		
+		function deleterow(a){
+			$.ajax({
+				type:"POST",
+				url:"deleteShopCart",
+				data:$('#formUpdate'+a).serialize(),
+				success:function(){
+				/* 	$('#formUpdate'+a).parent('tr').remove(); */
 					location.href='CartPage?id='+[[${session.lgedUser.id}]];
 				},
 				error:function(){
