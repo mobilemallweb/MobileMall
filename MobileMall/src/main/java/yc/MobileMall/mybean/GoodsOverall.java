@@ -2,6 +2,9 @@ package yc.MobileMall.mybean;
 
 import java.util.Arrays;
 
+import yc.MobileMall.bean.Salesnum;
+import yc.MobileMall.bean.Sizes;
+
 public class GoodsOverall {
 	private Integer id;
 
@@ -30,12 +33,32 @@ public class GoodsOverall {
     private Integer reviews;
 
     private Integer salesnumId;
+
+    private Salesnum salesnum;		//销售数量类
+    
+    private Sizes[] sizes;			//尺码类
     
     private String[] goodsClass;    //类别
     
-    private String[] size; 		//尺寸
+    private String size; 		//尺寸
     
     private String[] src;     //图片地址
+
+	public Sizes[] getSizes() {
+		return sizes;
+	}
+
+	public void setSizes(Sizes[] sizes) {
+		this.sizes = sizes;
+	}
+
+	public Salesnum getSalesnum() {
+		return salesnum;
+	}
+
+	public void setSalesnum(Salesnum salesnum) {
+		this.salesnum = salesnum;
+	}
 
 	public Integer getId() {
 		return id;
@@ -157,11 +180,13 @@ public class GoodsOverall {
 		this.goodsClass = goodsClass;
 	}
 
-	public String[] getSize() {
+	
+
+	public String getSize() {
 		return size;
 	}
 
-	public void setSize(String[] size) {
+	public void setSize(String size) {
 		this.size = size;
 	}
 
@@ -178,8 +203,11 @@ public class GoodsOverall {
 		return "GoodsOverall [id=" + id + ", name=" + name + ", price=" + price + ", disPrice=" + disPrice + ", brands="
 				+ brands + ", productCode=" + productCode + ", weight=" + weight + ", rewardPoints=" + rewardPoints
 				+ ", availability=" + availability + ", goosdes=" + goosdes + ", description=" + description
-				+ ", classId=" + classId + ", reviews=" + reviews + ", salesnumId=" + salesnumId + ", goodsClass="
-				+ Arrays.toString(goodsClass) + ", size=" + Arrays.toString(size) + ", src=" + Arrays.toString(src)
-				+ "]";
+				+ ", classId=" + classId + ", reviews=" + reviews + ", salesnumId=" + salesnumId + ", salesnum="
+				+ salesnum + ", sizes=" + Arrays.toString(sizes) + ", goodsClass=" + Arrays.toString(goodsClass)
+				+ ", size=" + size + ", src=" + Arrays.toString(src) + "]";
 	}
+
+
+	
 }

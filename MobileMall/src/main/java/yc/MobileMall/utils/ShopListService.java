@@ -13,11 +13,19 @@ import yc.MobileMall.bean.Imgs;
 import yc.MobileMall.bean.ImgsExample;
 import yc.MobileMall.bean.Reviews;
 import yc.MobileMall.bean.ReviewsExample;
+import yc.MobileMall.bean.Salesnum;
+import yc.MobileMall.bean.Shopcart;
+import yc.MobileMall.bean.Sizes;
+import yc.MobileMall.bean.SizesExample;
 import yc.MobileMall.dao.ClassMapper;
 import yc.MobileMall.dao.GoodsMapper;
 import yc.MobileMall.dao.ImgsMapper;
 import yc.MobileMall.dao.ReviewsMapper;
+import yc.MobileMall.dao.SalesnumMapper;
+import yc.MobileMall.dao.ShopcartMapper;
+import yc.MobileMall.dao.SizesMapper;
 import yc.MobileMall.mybean.GoodsOverall;
+import yc.MobileMall.mybean.ShoppedCart;
 
 @Service
 public class ShopListService {
@@ -26,9 +34,15 @@ public class ShopListService {
 	@Autowired
 	private ImgsMapper imgsMapper;
 	@Autowired
-	private ClassMapper classMapper;
+	private ClassMapper classMapper;	//类别
 	@Autowired
 	private ReviewsMapper reviewsMapper;    //评论
+	@Autowired
+	private SizesMapper sizesMapper;	//尺码
+	@Autowired
+	private SalesnumMapper salesnumMapper;	//销售数量
+	@Autowired
+	private ShopcartMapper shopcartMapper;	//购物车
 	
 	/**
 	 * 根据goodsid 获取图片集
@@ -117,6 +131,40 @@ public class ShopListService {
 		}
 		
 		return listGO;
+	}
+	
+	/**
+	 * 根据goodsid 查询尺码，销售数量
+	 * @param goodsOverall
+	 */
+	public void getNumSize(GoodsOverall goodsOverall) {
+		//查询销售数量
+		Salesnum  sale=salesnumMapper.selectByPrimaryKey(goodsOverall.getSalesnumId());
+		goodsOverall.setSalesnum(sale);
+		
+		//查询尺码
+		SizesExample example=new SizesExample();
+		yc.MobileMall.bean.SizesExample.Criteria cre=example.createCriteria();
+		cre.andGoodsIdEqualTo(goodsOverall.getId());
+		List<Sizes> listsize=sizesMapper.selectByExample(example);
+		Sizes[] sizes=listsize.toArray(new Sizes[listsize.size()]);
+		goodsOverall.setSizes(sizes);
+	}
+	
+	/**
+	 * 执行购物车相关的insert语句
+	 * @param GO  GoodsOverall
+	 * @param id 用户id
+	 * @param size
+	 * @param num
+	 * @return 
+	 */
+	public void addtoCartSer(GoodsOverall GO, Integer uid, String size, Integer num) {
+		Shopcart sc=new Shopcart();				//保存到购物车
+		sc.setGoodsId(GO.getId());
+		sc.setGoodsnum(num);
+		sc.setUserId(uid);
+		shopcartMapper.insertSelective(sc);
 	}
 	
 }

@@ -72,8 +72,8 @@ public class GoodsService {
 		List<Shopcart> listcart=shopcartMapper.selectByExample(sce);  
 		
 		int gid=-1;
-		ShoppedCart shopcart=new ShoppedCart();
 		for(int i=0;i<listcart.size();i++){
+			ShoppedCart shopcart=new ShoppedCart();
 			gid=listcart.get(i).getGoodsId();
 			shopcart.setUserId(id);
 			shopcart.setGoodsid(gid);

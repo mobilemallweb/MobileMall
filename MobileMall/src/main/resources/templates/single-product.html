@@ -135,7 +135,7 @@
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-6">
                                             <div class="product-details">
-                                                <h3 class="product-name">Cas Meque Metus</h3>
+                                                <h3 class="product-name" th:text="${session.singleGoods.name}">Cas Meque Metus</h3>
                                                 <div class="product-ratings d-flex">
                                                     <ul class="rating d-flex mr-4">
                                                         <li><i class="fa fa-star"></i></li>
@@ -146,61 +146,60 @@
                                                     </ul>
                                                     <ul class="comments-advices list-inline d-flex">
                                                         <li class="list-inline-item mr-3"><a href="#">2 Reviews</a></li>
-                                                        <li class="list-inline-item"><a href="#">Write a Review</a></li>
+                                                        <li class="list-inline-item"><a href="#">ask to Reviewer</a></li>
                                                     </ul>
                                                 </div>
-                                                <div class="product-price">
+                                                <div class="product-price" th:if="${not #strings.isEmpty(session.singleGoods.disPrice)}">
                                                     <p class="d-flex align-items-center">
-                                                        <span class="price-old">16.51</span>
-                                                        <span class="price-new">$15.19</span>
-                                                        <span class="price-discount">-5%</span>
+                                                        <span class="price-old" th:text="${session.singleGoods.price}">16.51</span>
+                                                        <span class="price-new" th:text="${session.singleGoods.disPrice}">$15.19</span>
+                                                        <span class="price-discount" >-5% 没做</span>
                                                     </p>
                                                 </div>
+                                                <div class="product-price" th:if="${#strings.isEmpty(session.singleGoods.disPrice)}">
+                                                    <p class="d-flex align-items-center">
+                                                        <span class="price-new" th:text="${session.singleGoods.price}">$15.19</span>
+                                                    </p>
+                                                </div>
+                                                
                                                 <div class="product-meta">
                                                     <ul class="list-unstyled">
-                                                        <li>Brands <a href="#"><span>Canon</span></a></li>
-                                                        <li>Product Code: <span>2</span></li>
-                                                        <li>Reward Points: <span>200</span></li>
-                                                        <li>Availability: <span>In Stock</span></li>
+                                                        <li>Brands <a href="#"><span th:text="${session.singleGoods.brands}">Canon</span></a></li>
+                                                        <li>Product Code: <span th:text="${session.singleGoods.productCode}">2</span></li>
+                                                        <li>Reward Points: <span th:text="${session.singleGoods.rewardPoints}">200</span></li>
+                                      <!-- 库存 -->       <li>Availability: <span th:text="${session.singleGoods.availability}">In Stock</span></li>
                                                     </ul>
                                                 </div>
                                                 <div class="product-description">
-                                                    <p>The best is yet to come! Give your walls a voice with a framed poster. This aesthethic, optimistic poster will look great in your desk or in an open-space office. Painted wooden frame with passe-partout for more depth.</p>
+                                                    <p th:text="${session.singleGoods.goosdes}">简介</p>
                                                 </div>
                                                 <div class="product-actions">
                                                     <h3>Available Options</h3>
                                                     <div class="product-size clearfix">
                                                         <label>Size</label>
                                                         <select class="nice-select">
-                                                            <option>S</option>
-                                                            <option>M</option>
-                                                            <option>L</option>
+                                                        	<option th:text="${size.size}" th:value="${size.size}" th:each="size : ${session.singleGoods.sizes}"></option>
                                                         </select>
                                                     </div>
-                                                    <div class="product-color clearfix">
+                                            <!--  颜色选择  <div class="product-color clearfix">
                                                         <label>color</label>
                                                         <ul class="color-list">
                                                            <li>
                                                                 <a class="white" href="#"></a>
                                                             </li>
-                                                            <li>
-                                                                <a class="orange active" href="#"></a>
-                                                            </li>
-                                                            <li>
-                                                                <a class="paste" href="#"></a>
-                                                            </li>
                                                         </ul>
-                                                    </div>
+                                                    </div> -->
+                                                    
                                                     <div class="product-stock">
                                                        <label>Quantity</label>
                                                         <ul class="d-flex flex-wrap align-items-center">
                                                             <li class="box-quantity">
                                                                 <form action="#">
-                                                                    <input class="quantity" type="number" min="1" value="1">
+                                                                    <input class="quantity" type="number" min="1" th:max="${session.singleGoods.availability}" value="1">
                                                                 </form>
                                                             </li>
                                                             <li>
-                                                                <button type="button" class="default-btn">Add to Cart</button>
+                                                                <button type="button" onclick="AddtoCart()" class="default-btn">Add to Cart</button>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -794,6 +793,21 @@
 
     <!-- JS
     ============================================ -->
+
+	<script type="text/javascript">
+		function AddtoCart(){
+			var size=$(".nice-select").find("option:selected").text();
+			window.location.href = "addtoCart?size="+size+"&num="+$(".quantity").val();
+			/* $.ajax({
+				type:"POST",
+				url:"addtoCart",
+				data:{size:$(".nice-select").find("option:selected").text(),num:$(".quantity").val()},
+			    error : function() {
+                    alert("异常！");
+                }
+			}); */
+		}
+	</script>
 
   <div th:replace="common_js.html::commonOnLoadJs"></div>
 

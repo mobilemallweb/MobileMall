@@ -22,6 +22,14 @@ public class copyTest {
 	private GoodsService goodsService;
 	
 	@Test
+	public void getCart(){
+		List<ShoppedCart> list=goodsService.getShopCatGoods(1);
+		for(int i=0;i<list.size();i++){
+			System.out.println(list.get(i));
+		}
+	}
+	
+	@Test
 	public void testCopy(){
 		List<ShoppedCart> listGoods=goodsService.getShopCatGoods(1);  //查询物品
 		System.out.println(listGoods.get(0).getTotalprice());
