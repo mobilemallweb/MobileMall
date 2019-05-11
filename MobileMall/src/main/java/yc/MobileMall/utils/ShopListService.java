@@ -124,7 +124,12 @@ public class ShopListService {
 			for(int j=0;j<numsize;j++){
 				sum+=listrev.get(j).getPoint();
 			}
-			Integer avg=sum/numsize/2;
+			Integer avg=0;
+			if(numsize==0){
+				avg=sum/2;
+			}else{
+				avg=sum/numsize/2;
+			}
 			go.setReviews(avg);
 			
 			listGO.add(go);

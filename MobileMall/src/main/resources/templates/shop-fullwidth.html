@@ -81,10 +81,10 @@
                                             <div class="shop-products-wrapper">
                                                 <div class="tab-content">
                                                     <div id="grid" class="tab-pane fade active show" role="tabpanel">
-                                                        <div class="row" th:each="listgoods : ${session.listGoods}">
+                                                        <div class="row" >
                                                         
                                                      <!-- 第一个商品  -->   
-                                                            <div class="product-layout product-grid col-6 col-sm-6 col-md-4 col-lg-3">
+                                                            <div th:each="listgoods : ${session.listGoods}" class="product-layout product-grid col-6 col-sm-6 col-md-4 col-lg-3">
                                                                 <div class="product-thumb">
                                                                     <div class="product-inner">
                                                                         <div class="product-image">
@@ -123,46 +123,6 @@
                                                                                 <span th:if="${not #strings.isEmpty(listgoods.disPrice)}">
                                                                                		 <span class="price-new">$120.00</span>
                                                                                 </span>
-                                                                            </p>
-                                                                        </div><!-- end of product-caption -->
-                                                                    </div><!-- end of product-inner -->
-                                                                </div><!-- end of product-thumb -->
-                                                            </div> <!-- end of product-layout -->
-                                                            
-													 <!-- 商品二 -->
-                                                            <div class="product-layout product-grid col-6 col-sm-6 col-md-4 col-lg-3"> 
-                                                                <div class="product-thumb">
-                                                                    <div class="product-inner">
-                                                                        <div class="product-image">
-                                                                            <div class="label-product label-sale">-64%</div>
-                                                                            <a href="single-product.html">
-                                                                                <img src="assets/images/products/single/product-shop-1-1.jpg" alt="Proin Lectus Ipsum" class="hover-image">
-                                                                                <img src="assets/images/products/single/product-shop-1-2.jpg" alt="Proin Lectus Ipsum" title="Proin Lectus Ipsum">
-                                                                            </a>
-                                                                            <div class="action-links">
-                                                                                <a class="action-btn btn-cart" href="#" title="Add to Cart"><i class="pe-7s-cart"></i></a>
-                                                                                <a class="action-btn btn-wishlist" href="#" title="Add to Wishlist"><i class="pe-7s-like"></i></a>
-                                                                                <a class="action-btn btn-compare" href="#" title="Add to Compare"><i class="pe-7s-refresh-2"></i></a>
-                                                                                <a class="action-btn btn-quickview" data-toggle="modal" data-target="#product_quick_view" href="#" title="Quick View"><i class="pe-7s-search"></i></a>
-                                                                            </div>
-                                                                        </div> <!-- end of product-image -->
-
-                                                                        <div class="product-caption">
-                                                                            <div class="product-ratings">
-                                                                                <div class="rating-box">
-                                                                                    <ul class="rating d-flex">
-                                                                                        <li><i class="fa fa-star"></i></li>
-                                                                                        <li><i class="fa fa-star"></i></li>
-                                                                                        <li><i class="fa fa-star"></i></li>
-                                                                                        <li><i class="fa fa-star"></i></li>
-                                                                                        <li><i class="fa fa-star-o"></i></li>
-                                                                                    </ul>
-                                                                                </div>
-                                                                            </div>
-                                                                            <h4 class="product-name"><a href="single-product.html">Aliquam Consequat</a></h4>
-                                                                            <p class="product-price">
-                                                                                <span class="price-old">$420.00</span>
-                                                                                <span class="price-new">$150.00</span>
                                                                             </p>
                                                                         </div><!-- end of product-caption -->
                                                                     </div><!-- end of product-inner -->
