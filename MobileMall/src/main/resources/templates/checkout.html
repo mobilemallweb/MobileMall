@@ -7,19 +7,19 @@
 	window.onload=function(){
 		if(null != [[${session.lgedUser}]] ){
 			$.post("checkoutlist",{userId:[[${session.lgedUser.id}]]},function(data){
-				$("#first_name").val(data.firstName);
-				$("#last_name").val(data.lastName);
-				$("#company_name").val();
-				$("#email_address").val(data.email);
+				$("#first_name").val(data.receivers[0].firstName);
+				$("#last_name").val(data.receivers[0].lastName);
+				$("#company_name").val(data.receivers[0].company);
+				$("#email_address").val(data.receivers[0].email);
 				
-				$("#p_address").val();
-				$("#city_name").val();
-				$("#province_name").val();
+				$("#p_address").val(data.receivers[0].address);
+				$("#city_name").val(data.receivers[0].city);
+				$("#province_name").val(data.receivers[0].province);
 				
-				$("#zip_code").val();
+				$("#zip_code").val(data.receivers[0].zipcode);
 				$("#country_name").val('China');
-				$("#tel_number").val();
-				$("#fax_num").val();
+				$("#tel_number").val(data.receivers[0].telephone);
+				$("#fax_num").val(data.receivers[0].fax);
 			});
 		}
 	}

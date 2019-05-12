@@ -3,21 +3,29 @@ package yc.MobileMall.utils;
 import java.util.List;
 import java.util.Random;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import yc.MobileMall.bean.Receiver;
+import yc.MobileMall.bean.ReceiverExample;
 import yc.MobileMall.bean.User;
 import yc.MobileMall.bean.UserExample;
 import yc.MobileMall.bean.UserExample.Criteria;
+import yc.MobileMall.dao.ReceiverMapper;
 import yc.MobileMall.dao.UserMapper;
+import yc.MobileMall.mybean.UserExtends;
 
 @Service
 public class UserService {
 	@Autowired
-	private UserMapper usermapper;
+	private UserMapper usermapper; 
 	
 	@Autowired
-	private PostEmail postEmail;
+	private PostEmail postEmail;  //发送邮件
+	
+	@Autowired
+	private ReceiverMapper receiverMapper;	//收货人mapper
 	
 	public User getLogin(User user) throws BizException {
 		UserExample uem=new UserExample();
@@ -62,8 +70,20 @@ public class UserService {
 	 * @param userId
 	 * @return
 	 */
-	public User getThisUser(Integer userId) {
-		return usermapper.selectByPrimaryKey(userId);
+	public UserExtends getThisUser(Integer userId) {
+		UserExtends ue=new UserExtends();
+		User user=usermapper.selectByPrimaryKey(userId);	//查询user数据
+		BeanUtils.copyProperties(user, ue);
+		
+		ReceiverExample re=new ReceiverExample();			//查询对应收货信息
+		yc.MobileMall.bean.ReceiverExample.Criteria cri=re.createCriteria();
+		cri.andUserIdEqualTo(userId);
+		List<Receiver> listRec=receiverMapper.selectByExample(re);
+		
+		Receiver[] recs=listRec.toArray(new Receiver[listRec.size()]);
+		ue.setReceivers(recs);
+		
+		return ue;
 	}
 	
 	

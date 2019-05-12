@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import yc.MobileMall.bean.Receiver;
 import yc.MobileMall.bean.User;
 import yc.MobileMall.mybean.ShoppedCart;
+import yc.MobileMall.mybean.UserExtends;
 import yc.MobileMall.utils.BizException;
 import yc.MobileMall.utils.GoodsService;
 import yc.MobileMall.utils.ReceiverService;
@@ -76,8 +77,8 @@ public class GoodsController {
 	
 	@PostMapping("checkoutlist")
 	@ResponseBody
-	public User checkoutlist(Integer userId){
-		User thisUser=userService.getThisUser(userId);
+	public UserExtends checkoutlist(Integer userId){
+		UserExtends thisUser=userService.getThisUser(userId);
 		return thisUser;
 	}
 	

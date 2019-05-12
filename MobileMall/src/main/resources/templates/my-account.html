@@ -37,22 +37,23 @@
                                         <div class="row align-items-center no-gutters">
                                            <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
                                                <div class="single-info">
-                                                   <p class="user-name">Hello <span>John Doe</span> <br>(not John Doe? <a class="log-out" href="login.html">Log Out</a>)</p>
+                                                   <p class="user-name">Hello <span th:text="|${session.lgedUser.lastName} ${session.lgedUser.firstName}|">John Doe</span> <br>(not [[|${session.lgedUser.lastName} ${session.lgedUser.firstName}|]]? <a class="log-out" href="login.html">Log Out</a>)</p>
                                                </div>
                                            </div>
                                            <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3">
                                                <div class="single-info">
-                                                   <p>Need Assistance? Customer service at <a href="#">admin@example.com</a></p>
+                                                   <p>账号： [[${session.lgedUser.account}]]</p>
+                                                   <p>email： [[${session.lgedUser.email}]]</p>
                                                </div>
                                            </div>
                                            <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3">
                                                <div class="single-info">
-                                                   <p>E-mail them at <a href="#">support@example.com</a></p>
+                                                   <p>积分：[[${session.lgedUser.integral}]]</p>
                                                </div>
                                            </div>
                                            <div class="col-12 col-sm-12 col-md-6 col-lg-2 col-xl-3">
                                                <div class="single-info text-lg-center">
-                                                   <a class="btn btn-secondary" href="cart.html">View Cart</a>
+                                                   <a class="btn btn-secondary" onclick="changeInfo()" href="#">修改个人信息</a>
                                                </div>
                                            </div>
                                        </div> <!-- end of row -->
@@ -62,12 +63,12 @@
                                         <div class="row">
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-2">
                                                 <ul class="nav flex-column dashboard-list" role="tablist">
-                                                    <li><a class="nav-link active" data-toggle="tab" href="#dashboard">Dashboard</a></li>
-                                                    <li> <a class="nav-link" data-toggle="tab" href="#orders">Orders</a></li>
-                                                    <li><a class="nav-link" data-toggle="tab" href="#downloads">Downloads</a></li>
-                                                    <li><a class="nav-link" data-toggle="tab" href="#address">Addresses</a></li>
-                                                    <li><a class="nav-link" data-toggle="tab" href="#account-details">Account details</a></li>
-                                                    <li><a class="nav-link" href="login.html">logout</a></li>
+                                                    <li><a class="nav-link active" data-toggle="tab" href="#dashboard">advice消息</a></li>
+                                                    <li> <a class="nav-link" data-toggle="tab" href="#orders">待收货</a></li>
+                                                    <li><a class="nav-link" data-toggle="tab" href="#downloads">评价</a></li>
+                                                    <li><a class="nav-link" data-toggle="tab" href="#address">Addresses地址</a></li>
+                                                    <!-- <li><a class="nav-link" data-toggle="tab" href="#account-details">Account details帐户详细资料</a></li> -->
+                                                  <!--   <li><a class="nav-link" href="login.html">logout</a></li> -->
                                                 </ul> <!-- end of dashboard-list -->
                                             </div>
 
@@ -75,17 +76,17 @@
                                                 <!-- Tab panes -->
                                                 <div class="tab-content dashboard-content">
                                                     <div id="dashboard" class="tab-pane fade show active">
-                                                        <h3>Dashboard </h3>
+                                                        <h3>latest news </h3>
                                                         <p>From your account dashboard. you can easily check &amp; view your <a href="#">recent orders</a>, manage your <a href="#">shipping and billing addresses</a> and <a href="#">edit your password and account details.</a></p>
                                                     </div> <!-- end of tab-pane -->
 
                                                     <div id="orders" class="tab-pane fade">
-                                                        <h3>Orders</h3>
+                                                        <h3>Pending receipt</h3>
                                                         <div class="table-responsive">
                                                             <table class="table">
                                                                 <thead>
                                                                     <tr>
-                                                                        <th>Order</th>
+                                                                        <th>Goods</th>
                                                                         <th>Date</th>
                                                                         <th>Status</th>
                                                                         <th>Total</th>
@@ -98,14 +99,20 @@
                                                                         <td>September 10, 2018</td>
                                                                         <td>Processing</td>
                                                                         <td>$25.00 for 1 item </td>
-                                                                        <td><a class="btn btn-secondary" href="cart.html">view</a></td>
+                                                                        <td>
+                                                                        	<a class="btn btn-secondary" href="cart.html">确认收货</a>
+                                                                        	<a class="btn btn-secondary" href="cart.html">申请退货</a>
+                                                                        </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>2</td>
                                                                         <td>October 4, 2018</td>
                                                                         <td>Processing</td>
                                                                         <td>$17.00 for 1 item </td>
-                                                                        <td><a class="btn btn-secondary" href="cart.html">view</a></td>
+                                                                        <td>
+                                                                        	<a class="btn btn-secondary" href="cart.html">确认收货</a>
+                                                                        	<a class="btn btn-secondary" href="cart.html">申请退货</a>
+                                                                        </td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
@@ -113,7 +120,7 @@
                                                     </div> <!-- end of tab-pane -->
 
                                                     <div id="downloads" class="tab-pane fade">
-                                                        <h3>Downloads</h3>
+                                                        <h3>assess</h3>
                                                         <div class="table-responsive">
                                                             <table class="table">
                                                                 <thead>
@@ -505,6 +512,13 @@
     </div>
     <!-- End of Photoswipe -->
 
+	<script LANGUAGE="javascript" type="text/javascript">
+		function changeInfo(){
+			　window.open ("404.html", 
+					"newwindow", 
+					"height=400, width=400, top=30%, left=30%,toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no");
+		}
+	</script>
 
     <!-- JS
     ============================================ -->

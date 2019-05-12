@@ -462,4 +462,14 @@ public class Receiver {
     public void setUserId(Integer userId) {
         this.userId = userId;
     }
+
+	@Override
+	public String toString() {
+		return "Receiver [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", company=" + company
+				+ ", country=" + country + ", province=" + province + ", city=" + city + ", address=" + address
+				+ ", email=" + email + ", zipcode=" + zipcode + ", telephone=" + telephone + ", fax=" + fax
+				+ ", orderNotes=" + orderNotes + ", userId=" + userId + "]";
+	}
+    
+    
 }

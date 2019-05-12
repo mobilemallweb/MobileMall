@@ -12,8 +12,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import yc.MobileMall.bean.Goods;
 import yc.MobileMall.mybean.GoodsOverall;
 import yc.MobileMall.mybean.ShoppedCart;
+import yc.MobileMall.mybean.UserExtends;
 import yc.MobileMall.utils.GoodsService;
 import yc.MobileMall.utils.ShopListService;
+import yc.MobileMall.utils.UserService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -52,6 +54,14 @@ public class copyTest {
 		
 		List<GoodsOverall> list=sls.selectAllGoods();
 		System.out.println(list.get(1));
+	}
+	
+	@Autowired
+	private UserService us;
+	@Test
+	public void testcheckoutlist(){
+		UserExtends ue=us.getThisUser(1);
+		System.out.println(ue);
 	}
 	
 }
