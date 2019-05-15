@@ -40,17 +40,22 @@
 	} 
 	
 	function pay(){
-		$.ajax({
-			type:"POST",
-			url:"cartPay",
-			data:$('#formPay').serialize(),
-			success:function(data){
-				alert("支付成功!");
-			},
-			error:function(){
-				alert('异常！');
-			}
+		/*  if ($("#check_payment").attr("checked")) */ 
+		
+		var newData=$('#formPay').serialize()+"&"+$('#form1').serialize();
+		 $.ajax({
+				type:"POST",
+				url:"cartPay",
+				data:newData,
+				success:function(data){
+					alert("支付成功!");
+				},
+				error:function(){
+					alert('异常！');
+				}
 		});
+		
+		
 	}
 </script>
 
@@ -156,6 +161,8 @@
                                                 </div>
 
                                                 <form id="form1" action="#" method="post">
+                                                	<input type="hidden" name="Goodss" th:value="${session.Goodslist}"/>
+                                                	<input type="hidden" name="pricetotal" th:value="${session.pricetotal}"/>
                                                 	<input type="hidden" name="userId" th:value="${session.lgedUser.id}"/>
                                                     <div class="form-row mb-3">
                                                         <div class="form-group col-12 col-sm-12 col-md-6">
@@ -376,11 +383,11 @@
                                                             <tbody>
                                                                 <tr class="cart-subtotal">
                                                                     <th>Subtotal</th>
-                                                                    <td class="text-center">$440.00</td>
+                                                                    <td class="text-center" th:text="${session.pricetotal}">$440.00</td>
                                                                 </tr>            
                                                                 <tr class="order-total">
                                                                     <th>Total</th>
-                                                                    <td class="text-center"><strong><span class="primary-color">$440.00</span></strong></td>
+                                                                    <td class="text-center"><strong><span class="primary-color" id="pricetotal" th:text="${session.pricetotal}">$440.00</span></strong></td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
@@ -402,12 +409,13 @@
                                                             <div class="custom-radio">
                                                                 <input class="form-check-input" type="radio" name="payment" id="cash_delivery_payment" value="cash">
                                                                 <span class="checkmark"></span>
-                                                                <label class="form-check-label" for="cash_delivery_payment">Cash on Delivery货到付款</label>
+                                                                <label class="form-check-label" for="cash_delivery_payment">Cash on Delivery支付宝付款</label>
 
                                                                 <div class="payment-info" id="cash_pay">
                                                                     <p>Pay with cash upon delivery.</p>
                                                                 </div>
                                                             </div>
+                                                            <!-- 快速结账
                                                             <div class="custom-radio">
                                                                 <input class="form-check-input" type="radio" name="payment" id="paypal_payment" value="paypal">
                                                                 <span class="checkmark"></span>
@@ -416,7 +424,7 @@
                                                                 <div class="payment-info" id="paypal_pay">
                                                                     <p>Pay via PayPal. You can pay with your credit card if you don’t have a PayPal account.</p>
                                                                 </div>
-                                                            </div>
+                                                            </div> -->
                                                         </div>
                                                         <!--  删除 同意协议
                                                         <div class="form-row">

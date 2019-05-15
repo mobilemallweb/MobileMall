@@ -1,5 +1,6 @@
 package yc.MobileMall;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.junit.Test;
@@ -13,7 +14,9 @@ import yc.MobileMall.bean.Goods;
 import yc.MobileMall.mybean.GoodsOverall;
 import yc.MobileMall.mybean.ShoppedCart;
 import yc.MobileMall.mybean.UserExtends;
+import yc.MobileMall.utils.BizException;
 import yc.MobileMall.utils.GoodsService;
+import yc.MobileMall.utils.ReceiverService;
 import yc.MobileMall.utils.ShopListService;
 import yc.MobileMall.utils.UserService;
 
@@ -22,6 +25,9 @@ import yc.MobileMall.utils.UserService;
 public class copyTest {
 	@Autowired
 	private GoodsService goodsService;
+	
+	@Autowired
+	private ReceiverService rs;
 	
 	@Test
 	public void getCart(){
@@ -58,10 +64,27 @@ public class copyTest {
 	
 	@Autowired
 	private UserService us;
+	
 	@Test
 	public void testcheckoutlist(){
 		UserExtends ue=us.getThisUser(1);
 		System.out.println(ue);
+	}
+	
+	@Test
+	public void tetsDate(){
+		System.err.println(new Date(System.currentTimeMillis()));
+	}
+	
+	
+	@Test
+	public void addBuy() throws BizException{
+		/*for(int i=0;i<2;i++){
+			if(i>0){
+				rs.addNewCartPay(i);
+			}
+		}*/
+		rs.addNewCartPay("1,2");
 	}
 	
 }

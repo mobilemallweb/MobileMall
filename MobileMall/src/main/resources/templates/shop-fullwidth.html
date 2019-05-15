@@ -107,21 +107,31 @@
                                                                             <div class="product-ratings">
                                                                                 <div class="rating-box">
                                                                                     <ul class="rating d-flex">
+                                                                               <!-- 循环星星  -->
+                                                                                  <!--  <li th:each="i:${#numbers.sequence(1,[[listgoods.rewardPoints]])}">
+                                                                                   		<li><i class="fa fa-star"></i></li>
+                                                                                   </li> -->
                                                                                <!-- 评分的实星星 -->
                                                                                         <li><i class="fa fa-star"></i></li>
                                                                                         <li><i class="fa fa-star"></i></li>
                                                                                         <li><i class="fa fa-star"></i></li>
-                                                                                        <li><i class="fa fa-star"></i></li>
+                                                                                        <li><i class="fa fa-star"></i></li> 
                                                                                  <!-- 空星 -->
-                                                                                        <li><i class="fa fa-star-o"></i></li>
+                                                                                        <li><i class="fa fa-star-o"></i></li> 
+                                                                                       
                                                                                     </ul>
                                                                                 </div>
                                                                             </div>
                                                                             <h4 class="product-name"><a href="single-product.html" th:text="${listgoods.name}">Accumsan Elit</a></h4>
                                                                             <p class="product-price">
-                                                                                <span class="price-old" th:text="${listgoods.price}">$330.00</span>
-                                                                                <span th:if="${not #strings.isEmpty(listgoods.disPrice)}">
-                                                                               		 <span class="price-new">$120.00</span>
+                                                                            	<span th:if="${not #strings.isEmpty(listgoods.disPrice)}">
+	                                                                                <span class="price-old" th:text="${listgoods.price}">$330.00</span>
+	                                                                                <span>
+	                                                                               		 <span class="price-new" th:text="${listgoods.disPrice}">$120.00</span>
+	                                                                                </span>
+                                                                                </span>
+                                                                                <span th:if="${#strings.isEmpty(listgoods.disPrice)}">
+                                                                                	<span class="price-new" th:text="${listgoods.price}">$330.00</span>
                                                                                 </span>
                                                                             </p>
                                                                         </div><!-- end of product-caption -->

@@ -96,10 +96,14 @@ public class GoodsController {
 	@PostMapping("cartPay")
 	@ResponseBody
 	public String cartPay(HttpServletRequest req){
-		System.out.println(req.getParameter("payment"));
-		return "支付成功！";
+		try {
+			RecService.addNewCartPay(req);
+			return "支付成功！！";
+		} catch (BizException e) {
+			e.printStackTrace();
+			return "支付失败！！";
+		}
 	}
-	
 	
 	
 	
