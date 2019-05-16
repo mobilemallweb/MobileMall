@@ -1,7 +1,9 @@
 package yc.MobileMall.web;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,15 +13,17 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import yc.MobileMall.bean.User;
+import yc.MobileMall.mybean.TransactionExtends;
 import yc.MobileMall.utils.BizException;
 import yc.MobileMall.utils.UserService;
 
 @Transactional
 @Controller
 public class UserController {
-	
 	@Autowired
 	private UserService uService;
 	
@@ -67,4 +71,35 @@ public class UserController {
 		}
 	}
 	
+	/**
+	 * 获取用户收货信息,并返回
+	 * @return
+	 */
+	@RequestMapping("ReceiptMsg")
+	@ResponseBody
+	public void getReceiptMsg(HttpSession session){
+		User user=(User) session.getAttribute("lgedUser");
+		Integer uid=user.getId();
+		List<TransactionExtends> tlist=uService.getReceiptMessage(uid);
+		List<TransactionExtends> tlist2=new ArrayList<TransactionExtends>();
+		for(int i=0;i<tlist.size();i++){
+			if(tlist.get(i).getIsreceipt() ==null){
+				tlist2.add(tlist.get(i));
+			}
+		}
+		session.setAttribute("transList", tlist2);		//将信息保存在session中
+	}
+	
+	/**
+	 * 
+	 */
+	@RequestMapping("ConfirmReceipt")
+	public String setConfirmReceipt(Integer transid){
+		try {
+			uService.setReceipt(transid);
+		} catch (BizException e) {
+			e.printStackTrace();
+		}
+		return "my-account";
+	}
 }

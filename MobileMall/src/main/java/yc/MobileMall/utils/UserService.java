@@ -1,5 +1,6 @@
 package yc.MobileMall.utils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -7,13 +8,19 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import yc.MobileMall.bean.Goods;
 import yc.MobileMall.bean.Receiver;
 import yc.MobileMall.bean.ReceiverExample;
+import yc.MobileMall.bean.Transaction;
+import yc.MobileMall.bean.TransactionExample;
 import yc.MobileMall.bean.User;
 import yc.MobileMall.bean.UserExample;
 import yc.MobileMall.bean.UserExample.Criteria;
+import yc.MobileMall.dao.GoodsMapper;
 import yc.MobileMall.dao.ReceiverMapper;
+import yc.MobileMall.dao.TransactionMapper;
 import yc.MobileMall.dao.UserMapper;
+import yc.MobileMall.mybean.TransactionExtends;
 import yc.MobileMall.mybean.UserExtends;
 
 @Service
@@ -25,7 +32,13 @@ public class UserService {
 	private PostEmail postEmail;  //发送邮件
 	
 	@Autowired
+	private TransactionMapper transactionMapper;	//收货信息
+	
+	@Autowired
 	private ReceiverMapper receiverMapper;	//收货人mapper
+	
+	@Autowired
+	private GoodsMapper goodsMapper;
 	
 	public User getLogin(User user) throws BizException {
 		UserExample uem=new UserExample();
@@ -85,6 +98,90 @@ public class UserService {
 		
 		return ue;
 	}
+	
+	/**
+	 * 获取用户订单信息
+	 * @param uid 
+	 * @return 
+	 */
+	public List<TransactionExtends> getReceiptMessage(Integer uid) {
+		//获取订单信息
+		TransactionExample te=new TransactionExample();
+		yc.MobileMall.bean.TransactionExample.Criteria cri=te.createCriteria();
+		cri.andUserIdEqualTo(uid);
+		List<Transaction> list=transactionMapper.selectByExample(te);
+	//保存在拓展订单中
+		//获取相同id个数，保存为数量
+		List<TransactionExtends> tsteList=new ArrayList<TransactionExtends>();
+		for(int i=0;i<list.size();i++){
+			TransactionExtends TE=new TransactionExtends();
+			BeanUtils.copyProperties(list.get(i), TE);
+			
+			tsteList.add(TE);
+		}
+		setGsId(tsteList);
+		return tsteList;
+	}
+	
+	//获取所有id,从而获取商品名,获取对应的数量
+	public void setGsId(List<TransactionExtends> tsteList){
+		int size=tsteList.size();
+		for(int i=0;i<size;i++){
+			TransactionExtends te=tsteList.get(i);
+			String[] ss=te.getGoodsId().split(",");
+			
+			String gdid="";
+			String gdnum="";
+			for(int j=1;j<ss.length;j++){
+				if(! ss[j].equals(ss[j-1])){
+					int x=te.getGoodsId().length()-te.getGoodsId().replaceAll(ss[j],"").length();
+					x=x/ss[j].length();
+					gdid=gdid+","+ss[j];
+					gdnum=gdnum+","+x;
+				}
+			}
+			
+			String[] str1=gdid.split(",");
+			String[] str2=gdnum.split(",");
+			Integer[] gids=new Integer[str1.length-1];
+			Integer[] gnums=new Integer[str2.length-1];
+			for(int k=1;k<str1.length;k++){
+				gids[k-1]=Integer.parseInt(str1[k]);
+				gnums[k-1]=Integer.parseInt(str2[k]);
+			}
+			
+			String[] names=getGoodsname(gids);
+			tsteList.get(i).setGoodsName(names);
+			tsteList.get(i).setGoodsNum(gnums);
+		}
+	}
+	
+	//传id数组 获取对应的goodsname
+	public String[] getGoodsname(Integer[] gids){
+		int len=gids.length;
+		String[] names=new String[len];
+		for(int i=0;i<len;i++){
+			Goods gd=goodsMapper.selectByPrimaryKey(gids[i]);
+			names[i]=gd.getName();
+		}
+		return names;
+	}
+	
+	/**
+	 * 传入订单id，修改
+	 * @param transid
+	 * @throws BizException 
+	 */
+	public void setReceipt(Integer transid) throws BizException {
+		Transaction record=transactionMapper.selectByPrimaryKey(transid);
+		record.setIsreceipt(2);
+		int i=transactionMapper.updateByPrimaryKey(record);
+		if(i<0){
+			throw new BizException("系统繁忙!!");
+		}
+	}
+	
+	
 	
 	
 }

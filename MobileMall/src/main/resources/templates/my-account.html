@@ -64,7 +64,7 @@
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-2">
                                                 <ul class="nav flex-column dashboard-list" role="tablist">
                                                     <li><a class="nav-link active" data-toggle="tab" href="#dashboard">advice消息</a></li>
-                                                    <li> <a class="nav-link" data-toggle="tab" href="#orders">待收货</a></li>
+                                                    <li><a class="nav-link" data-toggle="tab" href="#orders">待收货</a></li>
                                                     <li><a class="nav-link" data-toggle="tab" href="#downloads">评价</a></li>
                                                     <li><a class="nav-link" data-toggle="tab" href="#address">Addresses地址</a></li>
                                                     <!-- <li><a class="nav-link" data-toggle="tab" href="#account-details">Account details帐户详细资料</a></li> -->
@@ -88,23 +88,23 @@
                                                                     <tr>
                                                                         <th>Goods</th>
                                                                         <th>Date</th>
-                                                                        <th>Status</th>
+                                                                        <th>Goods Number</th>
                                                                         <th>Total</th>
                                                                         <th>Actions</th>                
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    <tr>
-                                                                        <td>1</td>
-                                                                        <td>September 10, 2018</td>
-                                                                        <td>Processing</td>
-                                                                        <td>$25.00 for 1 item </td>
+                                                                    <tr th:each="trans : ${session.transList}">
+                                                                        <td><span th:each="nm : ${trans.goodsName}">[[${nm}]] &nbsp;</span></td>
+                                                                        <td th:text="${trans.transdate}">September 10, 2018</td>
+                                                                        <td><span th:each="num : ${trans.goodsNum}">[[${num}]] &nbsp;</span></td>
+                                                                        <td>$<span th:text="${trans.totalprice}"></span></td>
                                                                         <td>
-                                                                        	<a class="btn btn-secondary" href="cart.html">确认收货</a>
-                                                                        	<a class="btn btn-secondary" href="cart.html">申请退货</a>
+                                                                        	<a class="btn btn-secondary" th:href="|ConfirmReceipt?transid=${trans.id}|" >确认收货</a>
+                                                                        	<a class="btn btn-secondary" href="#"  >申请退货</a>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr>
+                                                                   <!--  <tr>
                                                                         <td>2</td>
                                                                         <td>October 4, 2018</td>
                                                                         <td>Processing</td>
@@ -113,7 +113,7 @@
                                                                         	<a class="btn btn-secondary" href="cart.html">确认收货</a>
                                                                         	<a class="btn btn-secondary" href="cart.html">申请退货</a>
                                                                         </td>
-                                                                    </tr>
+                                                                    </tr> -->
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -513,11 +513,29 @@
     <!-- End of Photoswipe -->
 
 	<script LANGUAGE="javascript" type="text/javascript">
+		window.onload=function(){
+			$.ajax({
+				url:"ReceiptMsg",
+				success:function(){
+					
+				},
+				error:function(){
+					alert("系统异常！！");
+				}
+			});
+		}
+		
 		function changeInfo(){
 			　window.open ("404.html", 
 					"newwindow", 
 					"height=400, width=400, top=30%, left=30%,toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no");
 		}
+		
+		/* function ConfirmReceipt(id){
+			alert("确认收货 ,id"+id);
+			windows.location.href();
+		} */
+		
 	</script>
 
     <!-- JS

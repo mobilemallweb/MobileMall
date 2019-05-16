@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import yc.MobileMall.bean.Goods;
 import yc.MobileMall.mybean.GoodsOverall;
 import yc.MobileMall.mybean.ShoppedCart;
+import yc.MobileMall.mybean.TransactionExtends;
 import yc.MobileMall.mybean.UserExtends;
 import yc.MobileMall.utils.BizException;
 import yc.MobileMall.utils.GoodsService;
@@ -28,6 +29,9 @@ public class copyTest {
 	
 	@Autowired
 	private ReceiverService rs;
+	
+	@Autowired
+	private UserService Users;
 	
 	@Test
 	public void getCart(){
@@ -85,6 +89,14 @@ public class copyTest {
 			}
 		}*/
 		rs.addNewCartPay("1,2");
+	}
+	
+	@Test
+	public void testdd(){
+		List<TransactionExtends> list=Users.getReceiptMessage(1);
+		for(int i=0;i<list.size();i++){
+			System.out.println(list.get(i));
+		}
 	}
 	
 }
