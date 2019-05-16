@@ -348,7 +348,8 @@
                                                     <h2>Your Order</h2>
                                                 </div>
                                                 <div class="product-container">
-                                                    <div class="product-list">
+                                             <!-- 显示购买信息 -->
+                                                    <div class="product-list" th:each="item:${session.Goodslist}">
                                                         <div class="product-inner media align-items-center">
                                                             <div class="product-image mr-4 mr-sm-5 mr-md-4 mr-lg-5">
                                                                 <a href="#">
@@ -356,26 +357,13 @@
                                                                 </a>
                                                             </div>
                                                             <div class="media-body">
-                                                                <h5>Proin Lectus Ipsum</h5>
-                                                                <p class="product-quantity">Quantity: 3</p>
-                                                                <p class="product-final-price">$180.00</p>
+                                                                <h5 th:text="${item.name}">Proin Lectus Ipsum</h5>
+                                                                <p class="product-quantity">Quantity: <span th:text="${item.goodsnum}">3</span></p>
+                                                                <p class="product-final-price">$<span th:text="${item.totalprice}">180.00</span></p>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="product-list">
-                                                        <div class="product-inner media align-items-center">
-                                                            <div class="product-image mr-4 mr-sm-5 mr-md-4 mr-lg-5">
-                                                                <a href="#">
-                                                                    <img src="assets/images/products/best/products-6-1.jpg" alt="Fusce Aliquam" title="Fusce Aliquam">
-                                                                </a>
-                                                            </div>
-                                                            <div class="media-body">
-                                                                <h5>Fusce Aliquam</h5>
-                                                                <p class="product-quantity">Quantity: 5</p>
-                                                                <p class="product-final-price">$260.00</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                 
                                                 </div> <!-- end of product-container -->
                                                 <div class="order-review">
                                                     <div class="table-responsive">

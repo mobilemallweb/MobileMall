@@ -95,9 +95,10 @@ public class GoodsController {
 	
 	@PostMapping("cartPay")
 	@ResponseBody
-	public String cartPay(HttpServletRequest req){
+	public String cartPay(HttpServletRequest req,HttpSession session){
+		List<ShoppedCart> listGoods=(List<ShoppedCart>) session.getAttribute("Goodslist");
 		try {
-			RecService.addNewCartPay(req);
+			RecService.addNewCartPay(req,listGoods);
 			return "支付成功！！";
 		} catch (BizException e) {
 			e.printStackTrace();
