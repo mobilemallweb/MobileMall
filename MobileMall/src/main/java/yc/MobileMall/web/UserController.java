@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -76,8 +78,7 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping("ReceiptMsg")
-	@ResponseBody
-	public void getReceiptMsg(HttpSession session){
+	public String getReceiptMsg(HttpSession session){
 		User user=(User) session.getAttribute("lgedUser");
 		Integer uid=user.getId();
 		List<TransactionExtends> tlist=uService.getReceiptMessage(uid);
@@ -88,18 +89,40 @@ public class UserController {
 			}
 		}
 		session.setAttribute("transList", tlist2);		//将信息保存在session中
+		return "redirect:/my-account.html";
 	}
 	
 	/**
 	 * 
 	 */
 	@RequestMapping("ConfirmReceipt")
-	public String setConfirmReceipt(Integer transid){
+	public String setConfirmReceipt(Integer transid,HttpSession session){
 		try {
 			uService.setReceipt(transid);
+			List<TransactionExtends> list=(List<TransactionExtends>) session.getAttribute("transList");
+			for(int i=0;i<list.size();i++){
+				if(list.get(i).getId().equals(transid)){
+					list.remove(i);
+				}
+			}
+			session.setAttribute("transList", list);		//将信息保存在session中
 		} catch (BizException e) {
 			e.printStackTrace();
 		}
 		return "my-account";
 	}
+	
+	@RequestMapping("updateInfo")
+	@ResponseBody
+	public User updateInfo(HttpSession session,HttpServletRequest req){
+		User oldUser=(User)session.getAttribute("lgedUser");
+		try {
+			User user=uService.updatelgedUser(session,req);
+			return user;
+		} catch (BizException e) {
+			e.printStackTrace();
+			return oldUser;
+		}
+	}
+	
 }

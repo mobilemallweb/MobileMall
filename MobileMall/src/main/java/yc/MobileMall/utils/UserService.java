@@ -1,8 +1,14 @@
 package yc.MobileMall.utils;
 
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -178,6 +184,52 @@ public class UserService {
 		int i=transactionMapper.updateByPrimaryKey(record);
 		if(i<0){
 			throw new BizException("系统繁忙!!");
+		}
+	}
+	
+	/**
+	 * 修改用户信息，先判断是否有值改变
+	 * @param session
+	 * @param req
+	 * @throws BizException 
+	 */
+	public User updatelgedUser(HttpSession session, HttpServletRequest req) throws BizException {
+		User oldUser=(User) session.getAttribute("lgedUser");
+		
+		String sex=req.getParameter("sex");
+		String firstName=req.getParameter("firstName");
+		String lastName=req.getParameter("lastName");
+		String email=req.getParameter("email");
+		String newPwd=req.getParameter("password2");
+		String confirmPwd=req.getParameter("securityCode");
+		String birthday=req.getParameter("birthday");
+		
+		Date date=java.sql.Date.valueOf(birthday);
+		
+		if(! sex.isEmpty() &&! oldUser.getSex().equals(sex)){
+			oldUser.setSex(sex);
+		}
+		if(! firstName.equals(oldUser.getFirstName())){
+			oldUser.setFirstName(firstName);
+		}
+		if(! lastName.equals(oldUser.getLastName())){
+			oldUser.setLastName(lastName);
+		}
+		if(! email.equals(oldUser.getEmail())){
+			oldUser.setEmail(email);
+		}
+		if(! newPwd.equals(oldUser.getPassword()) && confirmPwd.equals(oldUser.getSecurityCode())){
+			oldUser.setPassword(newPwd);
+		}
+		if(! birthday.equals(oldUser.getBirthday())){
+			oldUser.setBirthday(date);
+		}
+		
+		int i=usermapper.updateByPrimaryKeySelective(oldUser);
+		if(i>0){
+			return oldUser;
+		}else{
+			throw new BizException("修改失败！！");
 		}
 	}
 	
