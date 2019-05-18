@@ -3,11 +3,16 @@ package yc.MobileMall.web;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -18,8 +23,14 @@ import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradePagePayRequest;
 
 import yc.MobileMall.config.AlipayConfig;
+import yc.MobileMall.mybean.PayOrder;
+import yc.MobileMall.mybean.ShoppedCart;
+import yc.MobileMall.utils.BizException;
+import yc.MobileMall.utils.ReceiverService;
 @Controller
 public class AlipayController {
+	@Autowired
+	private ReceiverService RecService;
 	
 	@RequestMapping("pay")
 	@ResponseBody
@@ -64,7 +75,7 @@ public class AlipayController {
 	}
 	
 	@RequestMapping("return_url")
-	public String getpay(HttpServletRequest request) throws UnsupportedEncodingException, AlipayApiException{
+	public String getpay(HttpServletRequest request,HashMap<String, Object> map) throws UnsupportedEncodingException, AlipayApiException{
 		//获取支付宝GET过来反馈信息
 		Map<String,String> params = new HashMap<String,String>();
 		Map<String,String[]> requestParams = request.getParameterMap();
@@ -92,9 +103,53 @@ public class AlipayController {
 		//付款金额
 		String total_amount = new String(request.getParameter("total_amount").getBytes("ISO-8859-1"),"UTF-8");
 		
-		System.out.println("trade_no:"+trade_no+"<br/>out_trade_no:"+out_trade_no+"<br/>total_amount:"+total_amount);
+		System.out.println("trade_no:"+trade_no+" out_trade_no:"+out_trade_no+" total_amount:"+total_amount);
 		
-		return "redirect:/topay.html";
+		double db=Double.parseDouble(total_amount);
+		int total_amount2=(int) db;
+		int out_trade_no2=Integer.parseInt(out_trade_no);
+		
+		if(out_trade_no2==po.getOut_trade_no() && total_amount2==po.getTotal_amount()){
+			map.put("paymsg", "支付成功！！");
+		}else{
+			map.put("paymsg", "支付失败！！");
+		}
+		
+		return "checkout.html";
 	}
+	
+	private PayOrder po=new PayOrder();
+	
+	/**
+	 * 在线支付  my
+	 * @param session
+	 * @return
+	 */
+	@PostMapping("PayOnline")
+	@ResponseBody
+	public PayOrder PayOnline(HttpSession session,HttpServletRequest req){
+		List<ShoppedCart> listGoods=(List<ShoppedCart>) session.getAttribute("Goodslist");
+		
+		Integer pricetotal=0;
+		String bodys="";
+		for(int i=0;i<listGoods.size();i++){
+			pricetotal+=listGoods.get(i).getTotalprice();
+			bodys+=listGoods.get(i).getName()+"、";
+		}
+		po.setTotal_amount(pricetotal);
+		po.setSubject(bodys);
+		po.setBody("这将是您愉快的一次购物");
+		
+		//生成随机订单号
+		int no=1000;
+		Random r = new Random();
+		for(int i=0 ; i<3 ;  i++){
+			no += r.nextInt(1000000);
+		}
+		po.setOut_trade_no(no);
+		
+		return po;
+	}
+	
 	
 }

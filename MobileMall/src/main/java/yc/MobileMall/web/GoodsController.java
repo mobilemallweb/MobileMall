@@ -1,6 +1,7 @@
 package yc.MobileMall.web;
 
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import yc.MobileMall.bean.Receiver;
-import yc.MobileMall.bean.User;
+import yc.MobileMall.mybean.PayOrder;
 import yc.MobileMall.mybean.ShoppedCart;
 import yc.MobileMall.mybean.UserExtends;
 import yc.MobileMall.utils.BizException;
@@ -30,6 +31,7 @@ public class GoodsController {
 	
 	@Autowired
 	private ReceiverService RecService;
+	
 	/**
 	 * 通过用户，查询其对应的购物车
 	 * @param userId  用户的id

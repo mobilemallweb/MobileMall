@@ -22,6 +22,11 @@
 				$("#fax_num").val(data.receivers[0].fax);
 			});
 		}
+		
+		if(null != [[${paymsg}]]){
+			alert([[${paymsg}]])
+		}
+		
 	}
 	
 	function confirmRec(){
@@ -40,20 +45,40 @@
 	} 
 	
 	function pay(){
-		/*  if ($("#check_payment").attr("checked")) */ 
+		var val=$('input:radio[name="payment"]:checked').val();
 		
-		var newData=$('#formPay').serialize()+"&"+$('#form1').serialize();
-		 $.ajax({
-				type:"POST",
-				url:"cartPay",
-				data:newData,
-				success:function(data){
-					alert("支付成功!");
-				},
-				error:function(){
-					alert('异常！');
-				}
-		});
+		if (val == 'check') {
+			var newData=$('#formPay').serialize()+"&"+$('#form1').serialize();
+			 $.ajax({
+					type:"POST",
+					url:"cartPay",
+					data:newData,
+					success:function(data){
+						alert("支付成功!");
+					},
+					error:function(){
+						alert('异常！');
+					}
+			}); 
+		}else{
+			 $.ajax({
+					type:"POST",
+					url:"PayOnline",
+					success:function(data){
+						$("#WIDout_trade_no").val(data.out_trade_no);
+						$("#WIDtotal_amount").val(data.total_amount);
+						$("#WIDsubject").val(data.subject);
+						$("#WIDbody").val(data.body);
+					},
+					error:function(){
+						alert('系统繁忙！');
+					}
+			}); 
+			
+			$("#PayModal").modal('show');
+		}
+		
+		
 		
 		
 	}
@@ -62,6 +87,26 @@
 <body>
 
 <div th:include="common_top.html::onloadtop"></div>
+		<!-- 支付页面模态窗口 -->
+		<div class="modal fade" id="PayModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		    <div class="modal-dialog">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <h4 class="modal-title" id="myModalLabel">支付宝支付</h4>
+		                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		            </div>
+		            <div class="modal-body">
+		            	<form name=alipayment action=pay method=post>
+							订单号: <input id="WIDout_trade_no" name="WIDout_trade_no" readonly><br/><br/>
+							总金额: <input id="WIDtotal_amount" name="WIDtotal_amount" readonly><br/><br/>
+							商品名: <input id="WIDsubject" name="WIDsubject" readonly><br/><br/>
+							描述: <input id="WIDbody" name="WIDbody" readonly><br/><br/>
+							<input	type="submit" value="提交"> 
+						</form>
+		            </div>
+		        </div><!-- /.modal-content -->
+		    </div><!-- /.modal -->
+		</div>
 
         <div class="fixed-header-space"></div> <!-- empty placeholder div for Fixed Menu bar height-->
 
@@ -383,10 +428,10 @@
                                                 </div>
                                                 <div class="checkout-payment"> 
                                                 
-                                                     <form id="formPay" action="#">  <!-- 改用ajax提交 -->
+                                                     <form id="formPay" >  <!-- 改用ajax提交 -->
                                                         <div class="form-row">
                                                             <div class="custom-radio">
-                                                                <input class="form-check-input" type="radio" name="payment" id="check_payment" value="check" checked>
+                                                                <input class="form-check-input" type="radio" name="payment" id="check_payment" value="check" >
                                                                 <span class="checkmark"></span>
                                                                 <label class="form-check-label" for="check_payment">Check Payments支票付款</label>
 
@@ -395,7 +440,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="custom-radio">
-                                                                <input class="form-check-input" type="radio" name="payment" id="cash_delivery_payment" value="cash">
+                                                                <input class="form-check-input" type="radio" name="payment" id="cash_delivery_payment" value="cash" checked>
                                                                 <span class="checkmark"></span>
                                                                 <label class="form-check-label" for="cash_delivery_payment">Cash on Delivery支付宝付款</label>
 
@@ -425,7 +470,7 @@
                                                             </div>
                                                         </div> -->
                                                         <div class="form-row justify-content-end">
-                                                            <input type="submit" onclick="pay()" class="btn btn-secondary" value="Continue to Payment继续付款">
+                                                            <input type="button" onclick="pay()" class="btn btn-secondary" value="Continue to Payment继续付款">
                                                         </div>
                                                    </form> 
                                                    
