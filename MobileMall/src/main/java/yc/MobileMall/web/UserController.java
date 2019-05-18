@@ -84,7 +84,7 @@ public class UserController {
 		List<TransactionExtends> tlist=uService.getReceiptMessage(uid);
 		List<TransactionExtends> tlist2=new ArrayList<TransactionExtends>();
 		for(int i=0;i<tlist.size();i++){
-			if(tlist.get(i).getIsreceipt() ==null){
+			if(tlist.get(i).getIsreceipt() ==null || tlist.get(i).getIsreceipt()==0){
 				tlist2.add(tlist.get(i));
 			}
 		}

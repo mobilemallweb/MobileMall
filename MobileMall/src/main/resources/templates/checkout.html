@@ -21,12 +21,24 @@
 				$("#tel_number").val(data.receivers[0].telephone);
 				$("#fax_num").val(data.receivers[0].fax);
 			});
+			
+			if(null != [[${paymsg}]]){
+				if([[${paymsg}]] == '支付成功'){
+					var newData=$('#formPay').serialize()+"&"+$('#form1').serialize();
+					 $.ajax({
+							type:"POST",
+							url:"cartAliPay",
+							data:newData,
+							success:function(data){
+								alert("支付成功!");
+							},
+							error:function(){
+								alert('异常！');
+							}
+					}); 
+				}
+			}
 		}
-		
-		if(null != [[${paymsg}]]){
-			alert([[${paymsg}]])
-		}
-		
 	}
 	
 	function confirmRec(){
@@ -431,7 +443,7 @@
                                                      <form id="formPay" >  <!-- 改用ajax提交 -->
                                                         <div class="form-row">
                                                             <div class="custom-radio">
-                                                                <input class="form-check-input" type="radio" name="payment" id="check_payment" value="check" >
+                                                                <input class="form-check-input" type="radio" name="payment" id="check_payment" value="check" checked>
                                                                 <span class="checkmark"></span>
                                                                 <label class="form-check-label" for="check_payment">Check Payments支票付款</label>
 
@@ -440,7 +452,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="custom-radio">
-                                                                <input class="form-check-input" type="radio" name="payment" id="cash_delivery_payment" value="cash" checked>
+                                                                <input class="form-check-input" type="radio" name="payment" id="cash_delivery_payment" value="cash" >
                                                                 <span class="checkmark"></span>
                                                                 <label class="form-check-label" for="cash_delivery_payment">Cash on Delivery支付宝付款</label>
 

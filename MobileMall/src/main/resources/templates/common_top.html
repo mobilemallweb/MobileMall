@@ -223,7 +223,10 @@
                                         	</form>
                                             <li><a href="#" onclick="formCart.submit()" th:text="#{top.Cart}">Cart Page</a><li>
                                             <li><a href="checkout.html" th:text="#{top.Checkout}">Checkout Page</a></li>
-                                            <li><a href="wishlist.html" th:text="#{top.Wishlist}">Wishlist Page</a></li>
+                                            <li><a href="#" onclick="formWishList.submit()" th:text="#{top.Wishlist}">Wishlist Page</a></li>
+                                            <form action="WishlistPage" method="post" id="formWishList">
+                                        		<input type="hidden" name="uid" th:value="${session.lgedUser.id}" th:if="${not #strings.isEmpty(session.lgedUser)}">
+                                        	</form>
                                         </ul>
                                     </li>
 
@@ -242,7 +245,7 @@
                                     <li><a href="shop-grid.html" th:text="#{top.Grid}">Shop Grid</a></li>
                                     <li><a href="shop-list.html" th:text="#{top.List}">Shop List</a></li>
                                     <li><a href="shop-right-sidebar.html" th:text="#{top.RightSidebar}">Shop Right Sidebar</a></li>
-                                    <li><a href="single-product.html" th:text="#{top.ProductPage}">Single Product Page</a></li>
+                                    <li><a href="single-product.html?goodsid=1" th:text="#{top.ProductPage}">Single Product Page</a></li>
                                 </ul>
                             </li>
                             <li><a href="blog.html"><span th:text="#{top.Blog}">Blog Pages</span></a>

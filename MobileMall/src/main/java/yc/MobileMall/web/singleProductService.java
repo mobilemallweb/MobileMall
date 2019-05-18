@@ -42,4 +42,22 @@ public class singleProductService {
 		shopListService.addtoCartSer(GO,user.getId(),size,num);
 		return "redirect:/CartPage?id="+user.getId();
 	}
+	
+	//添加商品到收藏
+	@RequestMapping("addtoWishlist")
+	public String addtoWishlist(HttpSession session,String size,Integer num){
+		size=size.substring(14);
+		User user=(User) session.getAttribute("lgedUser");
+		GoodsOverall GO =(GoodsOverall) session.getAttribute("singleGoods");
+		shopListService.addtoWishlist(GO,user.getId(),size,num);
+		return "wishlist";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 }

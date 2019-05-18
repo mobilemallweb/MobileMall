@@ -62,7 +62,6 @@ public class ReceiverService {
 		re.setTransdate(new Date(System.currentTimeMillis()));					//创建时间
 		re.setTotalprice(Integer.parseInt(req.getParameter("pricetotal")));   //总价
 		re.setIsreceipt(0);  												//设置收货信息，未收货为0
-		
 	//查询收货人id
 		ReceiverExample example=new ReceiverExample();
 		yc.MobileMall.bean.ReceiverExample.Criteria cri=example.createCriteria();
@@ -73,6 +72,48 @@ public class ReceiverService {
 		List<Receiver> listRec=receiverMapper.selectByExample(example);
 		if(listRec.size()>0){	
 			re.setReceiverId(listRec.get(0).getId());						//收货人id
+		}else{
+			throw new BizException("请先保存收货人信息!!");						//*** 保存到数据库，获取收货人id
+		}
+		
+	//	re.setEstimatedtime(estimatedtime); 送达时间
+		
+		String goodids = "";
+		for(int i=0;i<listGoods2.size();i++){
+			int j=listGoods2.get(i).getGoodsnum();
+			while(j>0){
+				goodids=goodids+","+listGoods2.get(i).getGoodsid();
+				j--;
+			}
+		}
+		re.setGoodsId(goodids);											//商品id 个数表示数量
+		
+		try {
+			transactionMapper.insertSelective(re);
+		} catch (Exception e) {
+			throw new BizException("订单创建失败"+e.getMessage());
+		}
+	}
+	
+	/**
+	 * 保存新的订单
+	 * @param req
+	 * @param listGoods2 
+	 * @throws BizException 
+	 */
+	public void addCartAliPay(HttpServletRequest req, List<ShoppedCart> listGoods2) throws BizException {
+		Transaction re=new Transaction();
+		re.setUserId(Integer.parseInt(req.getParameter("userId")));
+		re.setTransdate(new Date(System.currentTimeMillis()));					//创建时间
+		re.setTotalprice(Integer.parseInt(req.getParameter("pricetotal")));   //总价
+		re.setIsreceipt(0);  												//设置收货信息，未收货为0
+	//查询收货人id
+		ReceiverExample example=new ReceiverExample();
+		yc.MobileMall.bean.ReceiverExample.Criteria cri=example.createCriteria();
+		cri.andUserIdEqualTo(listGoods2.get(0).getUserId());
+		List<Receiver> listRec=receiverMapper.selectByExample(example);
+		if(listRec.size()>0){	
+			re.setReceiverId(listRec.get(listRec.size()-1).getId());						//收货人id
 		}else{
 			throw new BizException("请先保存收货人信息!!");						//*** 保存到数据库，获取收货人id
 		}

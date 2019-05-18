@@ -17,6 +17,7 @@ import yc.MobileMall.bean.Salesnum;
 import yc.MobileMall.bean.Shopcart;
 import yc.MobileMall.bean.Sizes;
 import yc.MobileMall.bean.SizesExample;
+import yc.MobileMall.bean.Wishlist;
 import yc.MobileMall.dao.ClassMapper;
 import yc.MobileMall.dao.GoodsMapper;
 import yc.MobileMall.dao.ImgsMapper;
@@ -24,6 +25,7 @@ import yc.MobileMall.dao.ReviewsMapper;
 import yc.MobileMall.dao.SalesnumMapper;
 import yc.MobileMall.dao.ShopcartMapper;
 import yc.MobileMall.dao.SizesMapper;
+import yc.MobileMall.dao.WishlistMapper;
 import yc.MobileMall.mybean.GoodsOverall;
 import yc.MobileMall.mybean.ShoppedCart;
 
@@ -43,6 +45,9 @@ public class ShopListService {
 	private SalesnumMapper salesnumMapper;	//销售数量
 	@Autowired
 	private ShopcartMapper shopcartMapper;	//购物车
+	
+	@Autowired
+	private WishlistMapper wishlistMapper;		//收藏
 	
 	/**
 	 * 根据goodsid 获取图片集
@@ -170,6 +175,23 @@ public class ShopListService {
 		sc.setGoodsnum(num);
 		sc.setUserId(uid);
 		shopcartMapper.insertSelective(sc);
+	}
+
+	/**
+	 * 执行收藏相关的insert语句
+	 * @param GO  GoodsOverall
+	 * @param id 用户id
+	 * @param size
+	 * @param num
+	 * @return 
+	 */
+	public void addtoWishlist(GoodsOverall GO, Integer uid, String size, Integer num) {
+		Wishlist ws=new Wishlist();				//保存到收藏
+		ws.setId(null);
+		ws.setGoodsId(GO.getId());
+		ws.setGoodsnum(num);
+		ws.setUserId(uid);
+		wishlistMapper.insertSelective(ws);
 	}
 	
 }

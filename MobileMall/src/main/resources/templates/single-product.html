@@ -153,7 +153,7 @@
                                                     <p class="d-flex align-items-center">
                                                         <span class="price-old" th:text="${session.singleGoods.price}">16.51</span>
                                                         <span class="price-new" th:text="${session.singleGoods.disPrice}">$15.19</span>
-                                                        <span class="price-discount" >-5% 没做</span>
+                                                        <span class="price-discount" >-5% ***</span>
                                                     </p>
                                                 </div>
                                                 <div class="product-price" th:if="${#strings.isEmpty(session.singleGoods.disPrice)}">
@@ -195,7 +195,7 @@
                                                         <ul class="d-flex flex-wrap align-items-center">
                                                             <li class="box-quantity">
                                                                 <form action="#">
-                                                                    <input class="quantity" type="number" min="1" th:max="${session.singleGoods.availability}" value="1">
+                                                                    <input class="quantity" type="number" min="1" max="99" value="1">
                                                                 </form>
                                                             </li>
                                                             <li>
@@ -204,7 +204,7 @@
                                                         </ul>
                                                     </div>
                                                     <div class="wishlist-compare">
-                                                        <button class="btn-wishlist" type="button" title="Add to Wishlist">Add to Wishlist</button>
+                                                        <button class="btn-wishlist" onclick="AddtoWhishlist()" type="button" title="Add to Wishlist">Add to Wishlist</button>
                                                         <button class="btn-compare" type="button" title="Add to Compare">Add to Compare</button>
                                                     </div>
                                                 </div>
@@ -806,6 +806,12 @@
                     alert("异常！");
                 }
 			}); */
+		}
+		
+		
+		function AddtoWhishlist(){
+			var size=$(".nice-select").find("option:selected").text();
+			window.location.href = "addtoWishlist?size="+size+"&num="+$(".quantity").val();
 		}
 	</script>
 

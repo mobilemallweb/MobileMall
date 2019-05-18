@@ -25,7 +25,6 @@ import com.alipay.api.request.AlipayTradePagePayRequest;
 import yc.MobileMall.config.AlipayConfig;
 import yc.MobileMall.mybean.PayOrder;
 import yc.MobileMall.mybean.ShoppedCart;
-import yc.MobileMall.utils.BizException;
 import yc.MobileMall.utils.ReceiverService;
 @Controller
 public class AlipayController {
@@ -103,14 +102,12 @@ public class AlipayController {
 		//付款金额
 		String total_amount = new String(request.getParameter("total_amount").getBytes("ISO-8859-1"),"UTF-8");
 		
-		System.out.println("trade_no:"+trade_no+" out_trade_no:"+out_trade_no+" total_amount:"+total_amount);
-		
 		double db=Double.parseDouble(total_amount);
 		int total_amount2=(int) db;
 		int out_trade_no2=Integer.parseInt(out_trade_no);
 		
 		if(out_trade_no2==po.getOut_trade_no() && total_amount2==po.getTotal_amount()){
-			map.put("paymsg", "支付成功！！");
+			map.put("paymsg", "支付成功");
 		}else{
 			map.put("paymsg", "支付失败！！");
 		}

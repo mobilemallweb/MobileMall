@@ -1,18 +1,22 @@
 package yc.MobileMall.web;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import yc.MobileMall.bean.Goods;
 import yc.MobileMall.bean.Receiver;
+import yc.MobileMall.bean.Wishlist;
+import yc.MobileMall.mybean.GoodsOverall;
 import yc.MobileMall.mybean.PayOrder;
 import yc.MobileMall.mybean.ShoppedCart;
 import yc.MobileMall.mybean.UserExtends;
@@ -52,6 +56,32 @@ public class GoodsController {
 			return "redirect:/cart.html";
 		}else{
 			return "cart";
+		}
+	}
+	
+	/**
+	 * 通过用户，查询其对应的收藏,关联查询goods
+	 * @param userId  用户的id
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("WishlistPage")
+	public String getWishlistPage(Integer uid,HttpSession session){
+		if(uid!=null){
+			List<Wishlist> listWish=goodsService.getWishlist(uid);
+			List<GoodsOverall> WishGOlist=new ArrayList<GoodsOverall>();
+			
+			for(int i=0;i<listWish.size();i++){
+				GoodsOverall GO=new GoodsOverall();
+				Goods gs=goodsService.getGoods(listWish.get(i).getGoodsId());
+				BeanUtils.copyProperties(gs, GO);
+				GO.setWishlist(listWish.get(i));
+				WishGOlist.add(GO);
+			}
+			session.setAttribute("WishGOlist", WishGOlist);
+			return "redirect:/wishlist.html";
+		}else{
+			return "wishlist";
 		}
 	}
 	
@@ -108,6 +138,17 @@ public class GoodsController {
 		}
 	}
 	
-	
+	@PostMapping("cartAliPay")
+	@ResponseBody
+	public String cartAliPay(HttpServletRequest req,HttpSession session){
+		List<ShoppedCart> listGoods=(List<ShoppedCart>) session.getAttribute("Goodslist");
+		try {
+			RecService.addCartAliPay(req, listGoods);
+			return "支付成功！！";
+		} catch (BizException e) {
+			e.printStackTrace();
+			return "支付失败！！";
+		}
+	}
 	
 }

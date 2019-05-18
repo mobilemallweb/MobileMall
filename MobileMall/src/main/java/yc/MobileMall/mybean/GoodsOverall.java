@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import yc.MobileMall.bean.Salesnum;
 import yc.MobileMall.bean.Sizes;
+import yc.MobileMall.bean.Wishlist;
 
 public class GoodsOverall {
 	private Integer id;
@@ -43,6 +44,16 @@ public class GoodsOverall {
     private String size; 		//尺寸
     
     private String[] src;     //图片地址
+
+    private Wishlist wishlist;	//收藏
+    
+	public Wishlist getWishlist() {
+		return wishlist;
+	}
+
+	public void setWishlist(Wishlist wishlist) {
+		this.wishlist = wishlist;
+	}
 
 	public Sizes[] getSizes() {
 		return sizes;
@@ -205,9 +216,8 @@ public class GoodsOverall {
 				+ ", availability=" + availability + ", goosdes=" + goosdes + ", description=" + description
 				+ ", classId=" + classId + ", reviews=" + reviews + ", salesnumId=" + salesnumId + ", salesnum="
 				+ salesnum + ", sizes=" + Arrays.toString(sizes) + ", goodsClass=" + Arrays.toString(goodsClass)
-				+ ", size=" + size + ", src=" + Arrays.toString(src) + "]";
+				+ ", size=" + size + ", src=" + Arrays.toString(src) + ", wishlist=" + wishlist + "]";
 	}
-
 
 	
 }

@@ -14,9 +14,12 @@ import yc.MobileMall.bean.Shopcart;
 import yc.MobileMall.bean.ShopcartExample;
 import yc.MobileMall.bean.ShopcartExample.Criteria;
 import yc.MobileMall.bean.User;
+import yc.MobileMall.bean.Wishlist;
+import yc.MobileMall.bean.WishlistExample;
 import yc.MobileMall.dao.GoodsMapper;
 import yc.MobileMall.dao.ShopcartMapper;
 import yc.MobileMall.dao.UserMapper;
+import yc.MobileMall.dao.WishlistMapper;
 import yc.MobileMall.mybean.ShoppedCart;
 
 @Service
@@ -27,7 +30,8 @@ public class GoodsService {
 	private ShopcartMapper shopcartMapper;	//购物车
 	@Autowired
 	private UserMapper userMapper;			//用户
-	
+	@Autowired
+	private WishlistMapper wishlistMapper;	//收藏
 	/**
 	 * test  获取用户购物车
 	 * @param id 
@@ -129,6 +133,18 @@ public class GoodsService {
 	 */
 	public void deleteCart(Integer cartId) {
 		shopcartMapper.deleteByPrimaryKey(cartId);
+	}
+
+	/**
+	 * 查询收藏
+	 * @param uid
+	 * @return
+	 */
+	public List<Wishlist> getWishlist(Integer uid) {
+		WishlistExample we=new WishlistExample();
+		yc.MobileMall.bean.WishlistExample.Criteria cri=we.createCriteria();
+		cri.andUserIdEqualTo(uid);
+		return wishlistMapper.selectByExample(we);
 	}
 	
 	
