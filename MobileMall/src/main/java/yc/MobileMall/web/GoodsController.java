@@ -60,32 +60,6 @@ public class GoodsController {
 	}
 	
 	/**
-	 * 通过用户，查询其对应的收藏,关联查询goods
-	 * @param userId  用户的id
-	 * @param session
-	 * @return
-	 */
-	@RequestMapping("WishlistPage")
-	public String getWishlistPage(Integer uid,HttpSession session){
-		if(uid!=null){
-			List<Wishlist> listWish=goodsService.getWishlist(uid);
-			List<GoodsOverall> WishGOlist=new ArrayList<GoodsOverall>();
-			
-			for(int i=0;i<listWish.size();i++){
-				GoodsOverall GO=new GoodsOverall();
-				Goods gs=goodsService.getGoods(listWish.get(i).getGoodsId());
-				BeanUtils.copyProperties(gs, GO);
-				GO.setWishlist(listWish.get(i));
-				WishGOlist.add(GO);
-			}
-			session.setAttribute("WishGOlist", WishGOlist);
-			return "redirect:/wishlist.html";
-		}else{
-			return "wishlist";
-		}
-	}
-	
-	/**
 	 * 更改购物车商品数量
 	 * @param cartId
 	 * @param quantity

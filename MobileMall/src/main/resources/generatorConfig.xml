@@ -32,40 +32,40 @@ targetPackage：目标包名  targetProject：目标工程-->
 	<generatedKey column="id" sqlStatement="mysql" />
  -->
 		<table tableName="boughtgoods">
-			<generatedKey column="id" sqlStatement="mysql" />
+			<generatedKey column="id" sqlStatement="mysql" identity="true"/>
 		</table>
 		<table tableName="class">
-			<generatedKey column="id" sqlStatement="mysql" />
+			<generatedKey column="id" sqlStatement="mysql" identity="true"/>
 		</table>
 		<table tableName="goods">
-			<generatedKey column="id" sqlStatement="mysql" />
+			<generatedKey column="id" sqlStatement="mysql" identity="true"/>
 		</table>
 		<table tableName="imgs">
-			<generatedKey column="id" sqlStatement="mysql" />
+			<generatedKey column="id" sqlStatement="mysql" identity="true"/>
 		</table>
 		<table tableName="receiver">
-			<generatedKey column="id" sqlStatement="mysql" />
+			<generatedKey column="id" sqlStatement="mysql" identity="true"/>
 		</table>
 		<table tableName="reviews">
-			<generatedKey column="id" sqlStatement="mysql" />
+			<generatedKey column="id" sqlStatement="mysql" identity="true"/>
 		</table>
 		<table tableName="salesnum">
-			<generatedKey column="id" sqlStatement="mysql" />
+			<generatedKey column="id" sqlStatement="mysql" identity="true"/>
 		</table>
 		<table tableName="shopcart">
-			<generatedKey column="id" sqlStatement="mysql" />
+			<generatedKey column="id" sqlStatement="mysql" identity="true"/>
 		</table>
 		<table tableName="sizes">
-			<generatedKey column="id" sqlStatement="mysql" />
+			<generatedKey column="id" sqlStatement="mysql" identity="true"/>
 		</table>
 		<table tableName="transaction">
-			<generatedKey column="id" sqlStatement="mysql" />
+			<generatedKey column="id" sqlStatement="mysql" identity="true"/>
 		</table>
 		<table tableName="user">
-			<generatedKey column="id" sqlStatement="mysql" />
+			<generatedKey column="id" sqlStatement="mysql" identity="true"/>
 		</table>
 		<table tableName="wishlist">
-			<generatedKey column="id" sqlStatement="mysql" />
+			<generatedKey column="id" sqlStatement="mysql" identity="true"/>
 		</table>
 
 	</context>

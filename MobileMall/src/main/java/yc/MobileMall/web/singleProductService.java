@@ -20,11 +20,16 @@ public class singleProductService {
 	
 	@RequestMapping("single-product.html")
 	public String getdetailGoods(Integer goodsid,HttpSession session){
+		@SuppressWarnings("unchecked")
 		List<GoodsOverall> listGoods=(List<GoodsOverall>) session.getAttribute("listGoods");
 		int index=0;
-		for(int i=0;i<listGoods.size();i++){
-			if(goodsid==listGoods.get(i).getId()){
-				index=i;break;
+		if(null==listGoods){
+			return "redirect:/shop-fullwidth.html";
+		}else{
+			for(int i=0;i<listGoods.size();i++){
+				if(goodsid==listGoods.get(i).getId()){
+					index=i;break;
+				}
 			}
 		}
 		GoodsOverall GO=listGoods.get(index);
