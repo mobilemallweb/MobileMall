@@ -37,7 +37,7 @@ public class UserController {
 	}
 	
 	/////////登录
-	@PostMapping(value="login")
+	@PostMapping(value="Userlogin")
 	public String login(String AandE,String password,Map<String,String> map,HttpSession session){
 		User user = new User();
 		user.setPassword(password);
@@ -80,6 +80,11 @@ public class UserController {
 	@RequestMapping("ReceiptMsg")
 	public String getReceiptMsg(HttpSession session){
 		User user=(User) session.getAttribute("lgedUser");
+		
+		if(user==null){				///用户未登陆 跳转到登录页
+			session.setAttribute("lgmsg", "请先登陆！！");
+			return "redirect:/"+"login";
+		}
 		Integer uid=user.getId();
 		List<TransactionExtends> tlist=uService.getReceiptMessage(uid);
 		List<TransactionExtends> tlist2=new ArrayList<TransactionExtends>();

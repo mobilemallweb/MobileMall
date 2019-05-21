@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="zxx" xmlns:th="http://www.thymeleaf.org">
 <body>
-
 	<div th:fragment="onloadtop">
 		<!--[if lt IE 9]>
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please upgrade your browser to improve your experience.</p>
@@ -206,9 +205,9 @@
                                     <li><a href="index-4.html" th:text="#{top.homepage4}">Home Page 4</a></li>
                                 </ul>
                             </li>
-                            <li class="mega" data-columns="3"><a href="my-account.html"><span th:text="#{top.pages}">Pages</span></a>
+                            <li class="mega" data-columns="3"><a href="ReceiptMsg"><span th:text="#{top.pages}">Pages</span></a>
                                 <ul class="mega-container">
-                                    <li><a href="my-account.html" class="mega-menu-title"><h3 th:text="#{top.page1}">Inner pages 01</h3></a>
+                                    <li><a href="ReceiptMsg" class="mega-menu-title"><h3 th:text="#{top.page1}">Inner pages 01</h3></a>
                                         <ul>
                                             <li><a href="ReceiptMsg" th:text="#{top.MyAccount}">My Account</a></li>
                                             <li><a href="login.html" th:text="#{top.Login}">Login</a></li>
@@ -216,16 +215,16 @@
                                         </ul>
                                     </li>
 
-                                    <li><a href="#" class="mega-menu-title"><h3 th:text="#{top.page2}">Inner pages 02</h3></a>
+                                    <li><a class="mega-menu-title"><h3 th:text="#{top.page2}">Inner pages 02</h3></a>
                                         <ul>
                                         	<form action="CartPage" method="post" id="formCart">
-                                        		<input type="hidden" name="id" th:value="${session.lgedUser.id}" th:if="${not #strings.isEmpty(session.lgedUser)}">
+                                        		<input type="hidden" name="id" th:value="${session?.lgedUser.id}" th:if="${not #strings.isEmpty(session.lgedUser)}">
                                         	</form>
                                             <li><a href="#" onclick="formCart.submit()" th:text="#{top.Cart}">Cart Page</a><li>
                                             <li><a href="checkout.html" th:text="#{top.Checkout}">Checkout Page</a></li>
                                             <li><a href="#" onclick="formWishList.submit()" th:text="#{top.Wishlist}">Wishlist Page</a></li>
                                             <form action="WishlistPage" method="post" id="formWishList">
-                                        		<input type="hidden" name="uid" th:value="${session.lgedUser.id}" th:if="${not #strings.isEmpty(session.lgedUser)}">
+                                        		<input type="hidden" name="uid" th:value="${session?.lgedUser.id}" th:if="${not #strings.isEmpty(session.lgedUser)}">
                                         	</form>
                                         </ul>
                                     </li>

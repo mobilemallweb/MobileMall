@@ -55,7 +55,7 @@ public class GoodsController {
 			session.setAttribute("Goodslist", listGoods);
 			return "redirect:/cart.html";
 		}else{
-			return "cart";
+			return "login";
 		}
 	}
 	

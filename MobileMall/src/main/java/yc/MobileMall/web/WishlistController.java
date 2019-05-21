@@ -46,7 +46,7 @@ public class WishlistController {
 			session.setAttribute("WishGOlist", WishGOlist);
 			return "redirect:/wishlist.html";
 		}else{
-			return "wishlist";
+			return "login";
 		}
 	}
 	
