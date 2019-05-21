@@ -41,8 +41,11 @@ public class singleProductService {
 	//添加商品到购物车
 	@RequestMapping("addtoCart")
 	public String addtoCart(HttpSession session,String size,Integer num){
-		size=size.substring(14);
 		User user=(User) session.getAttribute("lgedUser");
+		if(null==user){
+			return "login";
+		}
+		size=size.substring(14);
 		GoodsOverall GO =(GoodsOverall) session.getAttribute("singleGoods");
 		shopListService.addtoCartSer(GO,user.getId(),size,num);
 		return "redirect:/CartPage?id="+user.getId();
@@ -51,8 +54,11 @@ public class singleProductService {
 	//添加商品到收藏
 	@RequestMapping("addtoWishlist")
 	public String addtoWishlist(HttpSession session,String size,Integer num){
-		size=size.substring(14);
 		User user=(User) session.getAttribute("lgedUser");
+		if(null==user){
+			return "login";
+		}
+		size=size.substring(14);
 		GoodsOverall GO =(GoodsOverall) session.getAttribute("singleGoods");
 		shopListService.addtoWishlist(GO,user.getId(),size,num);
 		return "wishlist";
