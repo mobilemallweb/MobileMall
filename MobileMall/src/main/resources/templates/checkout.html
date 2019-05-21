@@ -7,19 +7,20 @@
 	window.onload=function(){
 		if(null != [[${session.lgedUser}]] ){
 			$.post("checkoutlist",{userId:[[${session.lgedUser.id}]]},function(data){
-				$("#first_name").val(data.receivers[0].firstName);
-				$("#last_name").val(data.receivers[0].lastName);
-				$("#company_name").val(data.receivers[0].company);
-				$("#email_address").val(data.receivers[0].email);
+				var len=data.receivers.length-1;
+				$("#first_name").val(data.receivers[len].firstName);
+				$("#last_name").val(data.receivers[len].lastName);
+				$("#company_name").val(data.receivers[len].company);
+				$("#email_address").val(data.receivers[len].email);
 				
-				$("#p_address").val(data.receivers[0].address);
-				$("#city_name").val(data.receivers[0].city);
-				$("#province_name").val(data.receivers[0].province);
+				$("#p_address").val(data.receivers[len].address);
+				$("#city_name").val(data.receivers[len].city);
+				$("#province_name").val(data.receivers[len].province);
 				
-				$("#zip_code").val(data.receivers[0].zipcode);
+				$("#zip_code").val(data.receivers[len].zipcode);
 				$("#country_name").val('China');
-				$("#tel_number").val(data.receivers[0].telephone);
-				$("#fax_num").val(data.receivers[0].fax);
+				$("#tel_number").val(data.receivers[len].telephone);
+				$("#fax_num").val(data.receivers[len].fax);
 			});
 			
 			if(null != [[${paymsg}]]){

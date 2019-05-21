@@ -119,14 +119,12 @@ public class UserController {
 	
 	@RequestMapping("updateInfo")
 	@ResponseBody
-	public User updateInfo(HttpSession session,HttpServletRequest req){
-		User oldUser=(User)session.getAttribute("lgedUser");
+	public String updateInfo(HttpSession session,HttpServletRequest req){
 		try {
-			User user=uService.updatelgedUser(session,req);
-			return user;
+			uService.updatelgedUser(session,req);
+			return "修改成功！";
 		} catch (BizException e) {
-			e.printStackTrace();
-			return oldUser;
+			return e.getMessage();
 		}
 	}
 	

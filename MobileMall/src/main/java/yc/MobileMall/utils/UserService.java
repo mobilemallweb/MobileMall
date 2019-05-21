@@ -196,10 +196,17 @@ public class UserService {
 	public User updatelgedUser(HttpSession session, HttpServletRequest req) throws BizException {
 		User oldUser=(User) session.getAttribute("lgedUser");
 		
+		String email=req.getParameter("email");
+		if(! email.equals(oldUser.getEmail())){
+			if(checkemail(email)){
+				throw new BizException("邮箱已存在，修改失败。。。");
+			}
+			oldUser.setEmail(email);
+		}
+		
 		String sex=req.getParameter("sex");
 		String firstName=req.getParameter("firstName");
 		String lastName=req.getParameter("lastName");
-		String email=req.getParameter("email");
 		String newPwd=req.getParameter("password2");
 		String confirmPwd=req.getParameter("securityCode");
 		String birthday=req.getParameter("birthday");
@@ -215,9 +222,6 @@ public class UserService {
 		if(! lastName.equals(oldUser.getLastName())){
 			oldUser.setLastName(lastName);
 		}
-		if(! email.equals(oldUser.getEmail())){
-			oldUser.setEmail(email);
-		}
 		if(! newPwd.equals(oldUser.getPassword()) && confirmPwd.equals(oldUser.getSecurityCode())){
 			oldUser.setPassword(newPwd);
 		}
@@ -231,6 +235,23 @@ public class UserService {
 		}else{
 			throw new BizException("修改失败！！");
 		}
+	}
+
+	/**
+	 * 判断邮箱是否已存在
+	 * @param email
+	 * @return 存在true，不存在false
+	 */
+	private boolean checkemail(String email) {
+		UserExample example=new UserExample();
+		yc.MobileMall.bean.UserExample.Criteria cri=example.createCriteria();
+		cri.andEmailEqualTo(email);
+		List<User> listusers=usermapper.selectByExample(example);
+		
+		if(listusers.size()>0){
+			return true;
+		}
+		return false;
 	}
 	
 	

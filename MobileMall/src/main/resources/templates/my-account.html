@@ -613,14 +613,8 @@
 			$.ajax({
 				url:"updateInfo",
 			    data: $('#lgedUserInfo').serialize(),
-                success: function (user) {
-                   $("#f-name").val(user.firstName);
-                   $("#l-name").val(user.lastName  );
-                   $("#email").val(user.email);
-                   $("#newpassword").val();
-                   $("#c-password").val();
-                   $("#birth").val(user.birthday);
-                   alert("修改成功！");
+                success: function (msg) {
+                   alert(msg); 
                 },
                 error : function() {
                     alert("异常！");
