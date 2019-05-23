@@ -67,7 +67,7 @@
 					url:"cartPay",
 					data:newData,
 					success:function(data){
-						alert("支付成功!");
+						alert(data);
 					},
 					error:function(){
 						alert('异常！');
@@ -90,11 +90,35 @@
 			
 			$("#PayModal").modal('show');
 		}
+	}
+	
+	function chooseReceiver(){
+		var radioId=$('input:radio[name="chooseRec"]:checked').val();
 		
-		
+		var listRec=[[${session.mylistRec}]];
+		for(var i=0;i<listRec.length;i++){
+			if(radioId == listRec[i].id){
+				$("#first_name").val(listRec[i].firstName);
+				$("#last_name").val(listRec[i].lastName);
+				$("#company_name").val(listRec[i].company);
+				$("#email_address").val(listRec[i].email);
+				
+				$("#p_address").val(listRec[i].address);
+				$("#city_name").val(listRec[i].city);
+				$("#province_name").val(listRec[i].province);
+				
+				$("#zip_code").val(listRec[i].zipcode);
+				$("#country_name").val('China');
+				$("#tel_number").val(listRec[i].telephone);
+				$("#fax_num").val(listRec[i].fax);
+				alert('设置成功');
+				break;
+			}
+		}
 		
 		
 	}
+	
 </script>
 
 <body>
@@ -216,8 +240,53 @@
                                             <div class="checkout-form">
                                                 <div class="section-title left-aligned with-border">
                                                     <h2>Billing Details</h2>
+                                                    <input class="form-check-label" data-toggle="modal" data-target="#myModalRecepter2" type="button" value="选择收货地址"/>
                                                 </div>
-
+												
+												<!-- 收货地址模态框 -->
+													<!-- 模态框（Modal） -->
+													<div class="modal fade" id="myModalRecepter2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+													    <div class="modal-dialog">
+													        <div class="modal-content">
+													            <div class="modal-header">
+													                <h4 class="modal-title" id="myModalLabel">收货地址(默认地址为最后一条)</h4>
+													                <button type="button" class="close"  data-dismiss="modal" aria-hidden="true">&times;</button>
+													            </div>
+													            <!-- thmeleaf信息填写 -->
+													            <div class="modal-body">
+													            	<table class="table-Recepter">
+																	   <thead>
+																	      <tr>
+																	         <th>姓名</th>
+																	         <th>城市</th>
+																	         <th>省份</th>
+																	         <th>详细地址</th>
+																	         <th>电话</th>
+																	         <th>默认地址</th>
+																	      </tr>
+																	   </thead>
+																	   <tbody >
+																	      <tr th:each="rec:${session.mylistRec}">
+																	      	 <td th:text="|${rec.lastName} ${rec.firstName}|"></td>
+																	         <td th:text="${rec.city}"></td>
+																	          <td th:text="${rec.province}"></td>
+																	         <td th:text="${rec.address}"></td>
+																	          <td th:text="${rec.telephone}"></td>
+																	          <th>
+																	         	 <input id="deftRec" type="radio" name="chooseRec" th:value="${rec.id}"/>
+																	          </th>
+																	      </tr>
+																	   </tbody>
+																	</table>
+													            </div>
+													             <div class="modal-footer">
+													                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+													                <button type="button" onclick="chooseReceiver()" class="btn btn-primary">提交更改</button>
+													            </div>
+													        </div><!-- /.modal-content -->
+													    </div><!-- /.modal -->
+													</div>
+													
                                                 <form id="form1" action="#" method="post">
                                                 	<input type="hidden" name="Goodss" th:value="${session.Goodslist}"/>
                                                 	<input type="hidden" name="pricetotal" th:value="${session.pricetotal}"/>
@@ -291,13 +360,13 @@
                                                     </div>
                                                     <div class="form-row">
                                                         <div class="form-group col-12 col-sm-12 col-md-12">
-                                                            <div class="form-check mb-3">
+                                                           <!--  <div class="form-check mb-3">
                                                                 <div class="custom-checkbox">
                                                                     <input class="form-check-input" type="checkbox" id="create_account">
                                                                     <span class="checkmark"></span>
                                                                     <label class="form-check-label" for="create_account">Create an account?</label>
                                                                 </div>
-                                                            </div>
+                                                            </div> -->
                                                             <div class="new-account-info mt-4">
                                                                 <div class="form-row">
                                                                     <div class="form-group col-12 col-sm-12 col-md-12">

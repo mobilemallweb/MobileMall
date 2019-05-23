@@ -1,8 +1,6 @@
 package yc.MobileMall.utils;
 
 import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -17,6 +15,8 @@ import org.springframework.stereotype.Service;
 import yc.MobileMall.bean.Goods;
 import yc.MobileMall.bean.Receiver;
 import yc.MobileMall.bean.ReceiverExample;
+import yc.MobileMall.bean.Shopcart;
+import yc.MobileMall.bean.ShopcartExample;
 import yc.MobileMall.bean.Transaction;
 import yc.MobileMall.bean.TransactionExample;
 import yc.MobileMall.bean.User;
@@ -24,6 +24,7 @@ import yc.MobileMall.bean.UserExample;
 import yc.MobileMall.bean.UserExample.Criteria;
 import yc.MobileMall.dao.GoodsMapper;
 import yc.MobileMall.dao.ReceiverMapper;
+import yc.MobileMall.dao.ShopcartMapper;
 import yc.MobileMall.dao.TransactionMapper;
 import yc.MobileMall.dao.UserMapper;
 import yc.MobileMall.mybean.TransactionExtends;
@@ -45,6 +46,9 @@ public class UserService {
 	
 	@Autowired
 	private GoodsMapper goodsMapper;
+	
+	@Autowired
+	private ShopcartMapper shopcartMapper;
 	
 	public User getLogin(User user) throws BizException {
 		UserExample uem=new UserExample();
@@ -287,7 +291,29 @@ public class UserService {
 		}
 	}
 	
-	
+	/**
+	 * 移除购物车 通过uid
+	 * @param uid
+	 * @throws BizException 
+	 */
+	public void removeCart(Integer uid) throws BizException{
+		ShopcartExample byid=new ShopcartExample();
+		yc.MobileMall.bean.ShopcartExample.Criteria cri=byid.createCriteria();
+		cri.andUserIdEqualTo(uid);
+		List<Shopcart> listcart=shopcartMapper.selectByExample(byid);
+		shopcartMapper.deleteByExample(byid);
+		
+		for(int i=0;i<listcart.size();i++){
+			Integer gid=listcart.get(i).getGoodsId();
+			Goods goods=goodsMapper.selectByPrimaryKey(gid);
+			int num=goods.getAvailability()-listcart.get(i).getGoodsnum();
+			if(num<0){
+				throw new BizException("库存不足！！！！");
+			}
+			goods.setAvailability(num);
+			goodsMapper.updateByPrimaryKeySelective(goods);
+		}
+	}
 	
 	
 }

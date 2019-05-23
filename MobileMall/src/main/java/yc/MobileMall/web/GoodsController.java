@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import yc.MobileMall.bean.Goods;
 import yc.MobileMall.bean.Receiver;
+import yc.MobileMall.bean.User;
 import yc.MobileMall.bean.Wishlist;
 import yc.MobileMall.mybean.GoodsOverall;
 import yc.MobileMall.mybean.PayOrder;
@@ -105,6 +106,7 @@ public class GoodsController {
 		List<ShoppedCart> listGoods=(List<ShoppedCart>) session.getAttribute("Goodslist");
 		try {
 			RecService.addNewCartPay(req,listGoods);
+			userService.removeCart(((User)session.getAttribute("lgedUser")).getId());
 			return "支付成功！！";
 		} catch (BizException e) {
 			e.printStackTrace();
