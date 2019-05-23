@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import yc.MobileMall.bean.Receiver;
 import yc.MobileMall.bean.User;
 import yc.MobileMall.mybean.TransactionExtends;
 import yc.MobileMall.utils.BizException;
@@ -49,6 +50,13 @@ public class UserController {
 		try {
 			User lgedUser=uService.getLogin(user);
 			session.setAttribute("lgedUser", lgedUser);
+			
+			User lgUser=(User) session.getAttribute("lgedUser");
+			List<Receiver> listRec=uService.getAllRecepter(lgUser.getId());
+			if(listRec.size()>0){
+				session.setAttribute("mylistRec", listRec);
+			}
+			
 			return "redirect:/main.html";
 		} catch (BizException e) {
 			map.put("loginMsg", e.getMessage());
@@ -128,4 +136,20 @@ public class UserController {
 		}
 	}
 	
+	@RequestMapping("getMyacountReceivers")
+	@ResponseBody
+	public void getMyacountReceivers(HttpSession session){
+		User lgUser=(User) session.getAttribute("lgedUser");
+		List<Receiver> listRec=uService.getAllRecepter(lgUser.getId());
+		if(listRec.size()>0){
+			session.setAttribute("mylistRec", listRec);
+		}
+	}
+	
+	@RequestMapping("changeDeftRec")
+	@ResponseBody
+	public String changeDeftRec(Integer recId){
+		uService.changeDefaultRec(recId);
+		return "ok";
+	}
 }

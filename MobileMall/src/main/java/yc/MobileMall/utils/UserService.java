@@ -254,6 +254,39 @@ public class UserService {
 		return false;
 	}
 	
+	/**
+	 * 查询所有的收货人信息
+	 * @param id
+	 * @return
+	 */
+	public List<Receiver> getAllRecepter(Integer uid) {
+		ReceiverExample example=new ReceiverExample();
+		yc.MobileMall.bean.ReceiverExample.Criteria cri=example.createCriteria();
+		cri.andUserIdEqualTo(uid);
+		return receiverMapper.selectByExample(example);
+	}
+
+	/**
+	 * 更改recId 为最大recId
+	 * @param recId
+	 */
+	public void changeDefaultRec(Integer recId) {
+		List<Receiver> recs=receiverMapper.selectByExample(null);
+		Receiver cRec=null;
+		for(int i=0;i<recs.size();i++){
+			if(recId.equals(recs.get(i).getId())){
+				cRec=recs.get(i);
+			}
+		}
+		int a=recs.get(recs.size()-1).getId();
+		int b=recId;
+		if(a!=b){
+			cRec.setId(a+1);
+			receiverMapper.deleteByPrimaryKey(recId);	//删旧
+			receiverMapper.insert(cRec);				//增加新
+		}
+	}
+	
 	
 	
 	
