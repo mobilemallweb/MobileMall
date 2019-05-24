@@ -21,6 +21,7 @@ public class ShopListController {
 	public String toShopFullWidth(HttpSession session){
 		//获取商品信息，图片，类别，评分     （尺码，数量详情页查询）
 		List<GoodsOverall> listGoods=shopListService.selectAllGoods();  
+		
 		session.setAttribute("listGoods", listGoods);
 		return "shop-fullwidth";
 	}

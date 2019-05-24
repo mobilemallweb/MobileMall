@@ -2,6 +2,7 @@ package yc.MobileMall.mybean;
 
 import java.util.Arrays;
 
+import yc.MobileMall.bean.Imgs;
 import yc.MobileMall.bean.Salesnum;
 import yc.MobileMall.bean.Sizes;
 import yc.MobileMall.bean.Wishlist;
@@ -218,6 +219,6 @@ public class GoodsOverall {
 				+ salesnum + ", sizes=" + Arrays.toString(sizes) + ", goodsClass=" + Arrays.toString(goodsClass)
 				+ ", size=" + size + ", src=" + Arrays.toString(src) + ", wishlist=" + wishlist + "]";
 	}
-
+	
 	
 }
